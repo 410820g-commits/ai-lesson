@@ -741,7 +741,7 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
   <div class="lesson-header">
     <div class="lesson-level-tag"><span class="level-pip" style="background:var(--lv0)"></span>零基础 · Phonétique — 课2</div>
     <h1 class="lesson-title">法语音素发音（上）</h1>
-    <p class="lesson-subtitle">掌握法语核心元音音素 · 听示范 · 跟读练习</p>
+    <p class="lesson-subtitle">核心元音音素逐个精讲 · 口型示意 · 跟读练习</p>
   </div>
   <div class="step-bar" id="tabs0">
     <div class="step-tab active" onclick="goStep(0,0)">音素讲解</div>
@@ -750,30 +750,381 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
   </div>
   <div class="content-area">
 
-    <!-- Step 0: 音素表 -->
+    <!-- Step 0: 音素逐个讲解 -->
     <div class="step-panel active" id="lv0s0">
-      <div class="section-label">核心元音音素 · 点击听发音</div>
-      <div class="phoneme-grid">
-        <div class="phoneme-cell" onclick="playPh(this)"><div class="ph-ipa">[a]</div><div class="ph-type">前低元音</div><div class="ph-word">p<em>a</em>pa</div></div>
-        <div class="phoneme-cell" onclick="playPh(this)"><div class="ph-ipa">[ɑ]</div><div class="ph-type">后低元音</div><div class="ph-word">p<em>â</em>te</div></div>
-        <div class="phoneme-cell" onclick="playPh(this)"><div class="ph-ipa">[e]</div><div class="ph-type">前半闭元音</div><div class="ph-word">caf<em>é</em></div></div>
-        <div class="phoneme-cell" onclick="playPh(this)"><div class="ph-ipa">[ɛ]</div><div class="ph-type">前半开元音</div><div class="ph-word">t<em>ê</em>te</div></div>
-        <div class="phoneme-cell" onclick="playPh(this)"><div class="ph-ipa">[i]</div><div class="ph-type">前闭元音</div><div class="ph-word">am<em>i</em></div></div>
-        <div class="phoneme-cell" onclick="playPh(this)"><div class="ph-ipa">[o]</div><div class="ph-type">后半闭元音</div><div class="ph-word">vélo</div></div>
-        <div class="phoneme-cell" onclick="playPh(this)"><div class="ph-ipa">[ɔ]</div><div class="ph-type">后半开元音</div><div class="ph-word">b<em>o</em>nne</div></div>
-        <div class="phoneme-cell" onclick="playPh(this)"><div class="ph-ipa">[u]</div><div class="ph-type">后闭圆唇</div><div class="ph-word">t<em>ou</em>t</div></div>
-        <div class="phoneme-cell" onclick="playPh(this)"><div class="ph-ipa">[y]</div><div class="ph-type">前闭圆唇</div><div class="ph-word">l<em>u</em>ne</div></div>
-        <div class="phoneme-cell" onclick="playPh(this)"><div class="ph-ipa">[ø]</div><div class="ph-type">前半闭圆唇</div><div class="ph-word">f<em>eu</em></div></div>
-        <div class="phoneme-cell" onclick="playPh(this)"><div class="ph-ipa">[ã]</div><div class="ph-type">鼻化低元音</div><div class="ph-word">enf<em>an</em>t</div></div>
-        <div class="phoneme-cell" onclick="playPh(this)"><div class="ph-ipa">[ɔ̃]</div><div class="ph-type">鼻化后元音</div><div class="ph-word">b<em>on</em></div></div>
+      <div class="section-label">核心元音音素 · 逐一精讲 · 每个音素附口型示意与跟读例词</div>
+
+      <!-- 音素卡片样式 -->
+      <style>
+        .phoneme-detail-card {
+          border: 1px solid var(--border);
+          border-radius: 6px;
+          padding: 22px 24px;
+          margin-bottom: 16px;
+          display: grid;
+          grid-template-columns: 90px 1fr;
+          gap: 20px;
+          align-items: start;
+        }
+        .phoneme-detail-card:hover { border-color: #bbb; }
+        .ph-left { text-align: center; }
+        .ph-big-ipa {
+          font-family: 'DM Serif Display', serif;
+          font-size: 42px;
+          line-height: 1;
+          margin-bottom: 6px;
+          color: var(--text);
+        }
+        .ph-type-tag {
+          font-size: 10.5px;
+          color: var(--muted);
+          letter-spacing: 0.3px;
+          line-height: 1.4;
+        }
+        .ph-mouth-svg { margin: 8px auto 0; display: block; }
+        .ph-right-top {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          margin-bottom: 10px;
+          flex-wrap: wrap;
+        }
+        .ph-desc {
+          font-size: 13.5px;
+          color: #333;
+          line-height: 1.7;
+          margin-bottom: 12px;
+        }
+        .ph-words-label {
+          font-size: 10px;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          color: var(--muted2);
+          margin-bottom: 8px;
+        }
+        .ph-word-row {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 7px 0;
+          border-bottom: 1px solid var(--border2);
+          font-size: 14px;
+        }
+        .ph-word-row:last-child { border-bottom: none; }
+        .ph-word-fr { font-weight: 600; min-width: 100px; }
+        .ph-word-fr em { font-style: normal; color: #c0392b; font-weight: 700; }
+        .ph-word-ipa { font-size: 12px; color: var(--muted); font-family: monospace; min-width: 100px; }
+        .ph-word-zh { font-size: 13px; color: #555; flex: 1; }
+        .ph-word-btn {
+          font-size: 11px;
+          color: var(--muted);
+          background: none;
+          border: 1px solid var(--border);
+          padding: 2px 9px;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: all 0.15s;
+          white-space: nowrap;
+        }
+        .ph-word-btn:hover { border-color: var(--text); color: var(--text); }
+        .ph-tip {
+          margin-top: 10px;
+          font-size: 12.5px;
+          color: #1a3a5c;
+          background: #f0f7ff;
+          border: 1px solid #c8dff5;
+          border-radius: 4px;
+          padding: 8px 12px;
+          line-height: 1.6;
+        }
+      </style>
+
+      <!-- [a] -->
+      <div class="phoneme-detail-card">
+        <div class="ph-left">
+          <div class="ph-big-ipa">[a]</div>
+          <div class="ph-type-tag">前低元音</div>
+          <svg class="ph-mouth-svg" width="70" height="55" viewBox="0 0 70 55">
+            <ellipse cx="35" cy="27" rx="28" ry="22" fill="#fde8d8" stroke="#ccc" stroke-width="1.5"/>
+            <ellipse cx="35" cy="27" rx="20" ry="14" fill="#c0392b" opacity="0.15"/>
+            <ellipse cx="35" cy="32" rx="14" ry="10" fill="#7a1a10" opacity="0.6"/>
+            <text x="35" y="50" text-anchor="middle" font-size="9" fill="#888">大开口</text>
+          </svg>
+        </div>
+        <div class="ph-right">
+          <div class="ph-desc">嘴巴大幅张开，舌头平放在口腔底部，发声时气流直接从喉咙出来。类似汉语"啊"但嘴型更前更开。</div>
+          <div class="ph-words-label">跟读例词（点击听音）</div>
+          <div class="ph-word-row"><span class="ph-word-fr">p<em>a</em>pa</span><span class="ph-word-ipa">[papa]</span><span class="ph-word-zh">爸爸</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">m<em>a</em>dame</span><span class="ph-word-ipa">[madam]</span><span class="ph-word-zh">女士，夫人</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">s<em>a</em>lle</span><span class="ph-word-ipa">[sal]</span><span class="ph-word-zh">大厅，房间</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">c<em>a</em>fe</span><span class="ph-word-ipa">[kafe]</span><span class="ph-word-zh">咖啡；咖啡馆</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">ch<em>a</em>t</span><span class="ph-word-ipa">[ʃa]</span><span class="ph-word-zh">猫</span><button class="ph-word-btn">🔊 听</button></div>
+        </div>
       </div>
 
-      <div class="tip-box"><span class="tip-icon">💡</span><span><strong>[y] vs [u]</strong> 是中国学习者最易混淆的一对。[u] 嘴型圆，气流直出，如"乌"；[y] 嘴型圆但舌位靠前贴近上腭，类似"鱼"的发音，法语 lune、tu、rue 中均为 [y]。</span></div>
-      <div class="tip-box"><span class="tip-icon">💡</span><span><strong>鼻音元音</strong> [ã][ɔ̃][ɛ̃] 是法语特有音，气流同时从口腔和鼻腔通过。汉语中没有对应音，需要专项练习。注意：an/en → [ã]，on → [ɔ̃]，in/im/ain → [ɛ̃]。</span></div>
+      <!-- [e] -->
+      <div class="phoneme-detail-card">
+        <div class="ph-left">
+          <div class="ph-big-ipa">[e]</div>
+          <div class="ph-type-tag">前半闭元音</div>
+          <svg class="ph-mouth-svg" width="70" height="55" viewBox="0 0 70 55">
+            <ellipse cx="35" cy="27" rx="28" ry="22" fill="#fde8d8" stroke="#ccc" stroke-width="1.5"/>
+            <ellipse cx="35" cy="28" rx="18" ry="6" fill="#c0392b" opacity="0.15"/>
+            <ellipse cx="35" cy="28" rx="11" ry="3.5" fill="#7a1a10" opacity="0.6"/>
+            <text x="35" y="50" text-anchor="middle" font-size="9" fill="#888">嘴角向外</text>
+          </svg>
+        </div>
+        <div class="ph-right">
+          <div class="ph-desc">嘴角向两侧拉开，略微微笑状，牙齿接近但不完全闭合，舌头抬起靠近上腭。类似汉语"诶"但更紧张。</div>
+          <div class="ph-words-label">跟读例词</div>
+          <div class="ph-word-row"><span class="ph-word-fr">caf<em>é</em></span><span class="ph-word-ipa">[kafe]</span><span class="ph-word-zh">咖啡</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr"><em>é</em>t<em>é</em></span><span class="ph-word-ipa">[ete]</span><span class="ph-word-zh">夏天</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">m<em>é</em>tro</span><span class="ph-word-ipa">[metʀo]</span><span class="ph-word-zh">地铁</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">ch<em>e</em>z</span><span class="ph-word-ipa">[ʃe]</span><span class="ph-word-zh">在……家</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">all<em>er</em></span><span class="ph-word-ipa">[ale]</span><span class="ph-word-zh">去</span><button class="ph-word-btn">🔊 听</button></div>
+        </div>
+      </div>
+
+      <!-- [ɛ] -->
+      <div class="phoneme-detail-card">
+        <div class="ph-left">
+          <div class="ph-big-ipa">[ɛ]</div>
+          <div class="ph-type-tag">前半开元音</div>
+          <svg class="ph-mouth-svg" width="70" height="55" viewBox="0 0 70 55">
+            <ellipse cx="35" cy="27" rx="28" ry="22" fill="#fde8d8" stroke="#ccc" stroke-width="1.5"/>
+            <ellipse cx="35" cy="28" rx="18" ry="9" fill="#c0392b" opacity="0.15"/>
+            <ellipse cx="35" cy="29" rx="12" ry="5.5" fill="#7a1a10" opacity="0.6"/>
+            <text x="35" y="50" text-anchor="middle" font-size="9" fill="#888">嘴稍开</text>
+          </svg>
+        </div>
+        <div class="ph-right">
+          <div class="ph-desc">与[e]类似但嘴巴开口更大，舌位稍低。出现在重音开音节末尾，或è、ê等带重音符号的字母处。</div>
+          <div class="ph-words-label">跟读例词</div>
+          <div class="ph-word-row"><span class="ph-word-fr">t<em>ê</em>te</span><span class="ph-word-ipa">[tɛt]</span><span class="ph-word-zh">头</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">f<em>ê</em>te</span><span class="ph-word-ipa">[fɛt]</span><span class="ph-word-zh">节日，聚会</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">m<em>ai</em>son</span><span class="ph-word-ipa">[mɛzɔ̃]</span><span class="ph-word-zh">房子</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">fr<em>è</em>re</span><span class="ph-word-ipa">[fʀɛʀ]</span><span class="ph-word-zh">兄弟</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">l<em>ai</em>t</span><span class="ph-word-ipa">[lɛ]</span><span class="ph-word-zh">牛奶</span><button class="ph-word-btn">🔊 听</button></div>
+        </div>
+      </div>
+
+      <!-- [i] -->
+      <div class="phoneme-detail-card">
+        <div class="ph-left">
+          <div class="ph-big-ipa">[i]</div>
+          <div class="ph-type-tag">前闭元音</div>
+          <svg class="ph-mouth-svg" width="70" height="55" viewBox="0 0 70 55">
+            <ellipse cx="35" cy="27" rx="28" ry="22" fill="#fde8d8" stroke="#ccc" stroke-width="1.5"/>
+            <ellipse cx="35" cy="28" rx="20" ry="4" fill="#c0392b" opacity="0.15"/>
+            <ellipse cx="35" cy="28" rx="14" ry="2.5" fill="#7a1a10" opacity="0.6"/>
+            <text x="35" y="50" text-anchor="middle" font-size="9" fill="#888">嘴角拉平</text>
+          </svg>
+        </div>
+        <div class="ph-right">
+          <div class="ph-desc">嘴唇横向拉伸呈微笑状，牙齿几乎合拢，舌头高度抬起紧靠上腭。和汉语"衣"发音相似但更紧张。</div>
+          <div class="ph-words-label">跟读例词</div>
+          <div class="ph-word-row"><span class="ph-word-fr">am<em>i</em></span><span class="ph-word-ipa">[ami]</span><span class="ph-word-zh">朋友</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">v<em>ie</em></span><span class="ph-word-ipa">[vi]</span><span class="ph-word-zh">生活，生命</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">mer<em>ci</em></span><span class="ph-word-ipa">[mɛʀsi]</span><span class="ph-word-zh">谢谢</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">par<em>i</em>s</span><span class="ph-word-ipa">[paʀi]</span><span class="ph-word-zh">巴黎</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">f<em>il</em>s</span><span class="ph-word-ipa">[fis]</span><span class="ph-word-zh">儿子</span><button class="ph-word-btn">🔊 听</button></div>
+        </div>
+      </div>
+
+      <!-- [u] -->
+      <div class="phoneme-detail-card">
+        <div class="ph-left">
+          <div class="ph-big-ipa">[u]</div>
+          <div class="ph-type-tag">后闭圆唇</div>
+          <svg class="ph-mouth-svg" width="70" height="55" viewBox="0 0 70 55">
+            <ellipse cx="35" cy="27" rx="28" ry="22" fill="#fde8d8" stroke="#ccc" stroke-width="1.5"/>
+            <circle cx="35" cy="27" r="10" fill="#c0392b" opacity="0.15"/>
+            <circle cx="35" cy="27" r="5.5" fill="#7a1a10" opacity="0.6"/>
+            <text x="35" y="50" text-anchor="middle" font-size="9" fill="#888">嘴唇圆突</text>
+          </svg>
+        </div>
+        <div class="ph-right">
+          <div class="ph-desc">嘴唇向前突出成圆形，开口较小，舌头后缩。类似汉语"乌"的发音。注意：法语单独的u发[y]音，只有ou才发[u]。</div>
+          <div class="ph-words-label">跟读例词</div>
+          <div class="ph-word-row"><span class="ph-word-fr">t<em>ou</em>t</span><span class="ph-word-ipa">[tu]</span><span class="ph-word-zh">全部，所有</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">v<em>ou</em>s</span><span class="ph-word-ipa">[vu]</span><span class="ph-word-zh">您；你们</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">b<em>ou</em>che</span><span class="ph-word-ipa">[buʃ]</span><span class="ph-word-zh">嘴</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">j<em>ou</em>r</span><span class="ph-word-ipa">[ʒuʀ]</span><span class="ph-word-zh">天，日</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">b<em>ou</em>quet</span><span class="ph-word-ipa">[bukɛ]</span><span class="ph-word-zh">花束</span><button class="ph-word-btn">🔊 听</button></div>
+        </div>
+      </div>
+
+      <!-- [y] -->
+      <div class="phoneme-detail-card">
+        <div class="ph-left">
+          <div class="ph-big-ipa">[y]</div>
+          <div class="ph-type-tag">前闭圆唇</div>
+          <svg class="ph-mouth-svg" width="70" height="55" viewBox="0 0 70 55">
+            <ellipse cx="35" cy="27" rx="28" ry="22" fill="#fde8d8" stroke="#ccc" stroke-width="1.5"/>
+            <circle cx="35" cy="27" r="9" fill="#c0392b" opacity="0.15"/>
+            <circle cx="35" cy="27" r="4.5" fill="#7a1a10" opacity="0.6"/>
+            <text x="35" y="50" text-anchor="middle" font-size="9" fill="#888">唇圆·舌前</text>
+          </svg>
+        </div>
+        <div class="ph-right">
+          <div class="ph-desc">法语特有音。先发[i]（舌头前移），同时嘴唇保持圆唇状。类似先说"衣"但嘴唇向前收圆。这是中文学习者最难的音之一。</div>
+          <div class="ph-tip">💡 技巧：先把嘴唇摆成说"乌"的圆形，然后用说"衣"的舌位发音。</div>
+          <div class="ph-words-label" style="margin-top:10px">跟读例词</div>
+          <div class="ph-word-row"><span class="ph-word-fr">l<em>u</em>ne</span><span class="ph-word-ipa">[lyn]</span><span class="ph-word-zh">月亮</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">t<em>u</em></span><span class="ph-word-ipa">[ty]</span><span class="ph-word-zh">你（主语）</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">r<em>ue</em></span><span class="ph-word-ipa">[ʀy]</span><span class="ph-word-zh">街道</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">m<em>u</em>sée</span><span class="ph-word-ipa">[myze]</span><span class="ph-word-zh">博物馆</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">s<em>û</em>r</span><span class="ph-word-ipa">[syʀ]</span><span class="ph-word-zh">确定的</span><button class="ph-word-btn">🔊 听</button></div>
+        </div>
+      </div>
+
+      <!-- [o] -->
+      <div class="phoneme-detail-card">
+        <div class="ph-left">
+          <div class="ph-big-ipa">[o]</div>
+          <div class="ph-type-tag">后半闭元音</div>
+          <svg class="ph-mouth-svg" width="70" height="55" viewBox="0 0 70 55">
+            <ellipse cx="35" cy="27" rx="28" ry="22" fill="#fde8d8" stroke="#ccc" stroke-width="1.5"/>
+            <circle cx="35" cy="27" r="12" fill="#c0392b" opacity="0.15"/>
+            <circle cx="35" cy="27" r="7" fill="#7a1a10" opacity="0.6"/>
+            <text x="35" y="50" text-anchor="middle" font-size="9" fill="#888">嘴唇圆开</text>
+          </svg>
+        </div>
+        <div class="ph-right">
+          <div class="ph-desc">嘴唇圆形突出，开口中等大小，舌头后缩。类似汉语"哦"但嘴唇更圆更向前。通常出现在词末或ô、au、eau处。</div>
+          <div class="ph-words-label">跟读例词</div>
+          <div class="ph-word-row"><span class="ph-word-fr">vélo</span><span class="ph-word-ipa">[velo]</span><span class="ph-word-zh">自行车</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">g<em>â</em>teau</span><span class="ph-word-ipa">[gato]</span><span class="ph-word-zh">蛋糕</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr"><em>eau</em></span><span class="ph-word-ipa">[o]</span><span class="ph-word-zh">水</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">ch<em>au</em>d</span><span class="ph-word-ipa">[ʃo]</span><span class="ph-word-zh">热的</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">c<em>ô</em>te</span><span class="ph-word-ipa">[kot]</span><span class="ph-word-zh">海岸；肋骨</span><button class="ph-word-btn">🔊 听</button></div>
+        </div>
+      </div>
+
+      <!-- [ɔ] -->
+      <div class="phoneme-detail-card">
+        <div class="ph-left">
+          <div class="ph-big-ipa">[ɔ]</div>
+          <div class="ph-type-tag">后半开元音</div>
+          <svg class="ph-mouth-svg" width="70" height="55" viewBox="0 0 70 55">
+            <ellipse cx="35" cy="27" rx="28" ry="22" fill="#fde8d8" stroke="#ccc" stroke-width="1.5"/>
+            <ellipse cx="35" cy="28" rx="14" ry="12" fill="#c0392b" opacity="0.15"/>
+            <ellipse cx="35" cy="29" rx="9" ry="7.5" fill="#7a1a10" opacity="0.6"/>
+            <text x="35" y="50" text-anchor="middle" font-size="9" fill="#888">嘴巴半开</text>
+          </svg>
+        </div>
+        <div class="ph-right">
+          <div class="ph-desc">嘴巴较大张开，嘴唇略微圆形，舌头后缩。比[o]开口更大、更松弛。通常出现在重音音节的开音节中。</div>
+          <div class="ph-words-label">跟读例词</div>
+          <div class="ph-word-row"><span class="ph-word-fr">b<em>o</em>nne</span><span class="ph-word-ipa">[bɔn]</span><span class="ph-word-zh">好的（阴性）</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">p<em>o</em>rte</span><span class="ph-word-ipa">[pɔʀt]</span><span class="ph-word-zh">门</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">c<em>o</em>rps</span><span class="ph-word-ipa">[kɔʀ]</span><span class="ph-word-zh">身体</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">h<em>o</em>mme</span><span class="ph-word-ipa">[ɔm]</span><span class="ph-word-zh">男人，人</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">s<em>o</em>rtir</span><span class="ph-word-ipa">[sɔʀtiʀ]</span><span class="ph-word-zh">出去，离开</span><button class="ph-word-btn">🔊 听</button></div>
+        </div>
+      </div>
+
+      <!-- [ø] -->
+      <div class="phoneme-detail-card">
+        <div class="ph-left">
+          <div class="ph-big-ipa">[ø]</div>
+          <div class="ph-type-tag">前半闭圆唇</div>
+          <svg class="ph-mouth-svg" width="70" height="55" viewBox="0 0 70 55">
+            <ellipse cx="35" cy="27" rx="28" ry="22" fill="#fde8d8" stroke="#ccc" stroke-width="1.5"/>
+            <circle cx="35" cy="27" r="10" fill="#c0392b" opacity="0.15"/>
+            <circle cx="35" cy="27" r="5" fill="#7a1a10" opacity="0.6"/>
+            <text x="35" y="50" text-anchor="middle" font-size="9" fill="#888">唇圆·舌[e]</text>
+          </svg>
+        </div>
+        <div class="ph-right">
+          <div class="ph-desc">与[y]类似——用[e]的舌位（前），配合圆唇的嘴型。先摆出说"诶"的嘴型，然后嘴唇向前收圆。出现在词末时发此音。</div>
+          <div class="ph-tip">💡 技巧：嘴型圆如[o]，舌头位置如[e]——两者结合即得[ø]。</div>
+          <div class="ph-words-label" style="margin-top:10px">跟读例词</div>
+          <div class="ph-word-row"><span class="ph-word-fr">f<em>eu</em></span><span class="ph-word-ipa">[fø]</span><span class="ph-word-zh">火；红绿灯</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">d<em>eu</em>x</span><span class="ph-word-ipa">[dø]</span><span class="ph-word-zh">二，两个</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">bl<em>eu</em></span><span class="ph-word-ipa">[blø]</span><span class="ph-word-zh">蓝色</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">j<em>eu</em>di</span><span class="ph-word-ipa">[ʒødi]</span><span class="ph-word-zh">星期四</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">n<em>eu</em>f</span><span class="ph-word-ipa">[nœf]</span><span class="ph-word-zh">九；新的</span><button class="ph-word-btn">🔊 听</button></div>
+        </div>
+      </div>
+
+      <!-- [ã] -->
+      <div class="phoneme-detail-card">
+        <div class="ph-left">
+          <div class="ph-big-ipa">[ã]</div>
+          <div class="ph-type-tag">鼻化低元音</div>
+          <svg class="ph-mouth-svg" width="70" height="55" viewBox="0 0 70 55">
+            <ellipse cx="35" cy="27" rx="28" ry="22" fill="#fde8d8" stroke="#ccc" stroke-width="1.5"/>
+            <ellipse cx="35" cy="28" rx="16" ry="11" fill="#c0392b" opacity="0.15"/>
+            <ellipse cx="35" cy="29" rx="10" ry="6.5" fill="#7a1a10" opacity="0.6"/>
+            <path d="M28 15 Q35 8 42 15" stroke="#888" stroke-width="1.5" fill="none"/>
+            <text x="35" y="50" text-anchor="middle" font-size="9" fill="#888">气从鼻口出</text>
+          </svg>
+        </div>
+        <div class="ph-right">
+          <div class="ph-desc">法语特有鼻音元音，气流同时从口腔和鼻腔流出。嘴型类似[a]，但发音时软腭下降让气流也从鼻腔通过。汉语无对应音。</div>
+          <div class="ph-tip">💡 技巧：捏住鼻子说"啊"——感觉到鼻子振动时，就是在发鼻音。</div>
+          <div class="ph-words-label" style="margin-top:10px">跟读例词</div>
+          <div class="ph-word-row"><span class="ph-word-fr">enf<em>an</em>t</span><span class="ph-word-ipa">[ɑ̃fɑ̃]</span><span class="ph-word-zh">孩子</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">t<em>em</em>ps</span><span class="ph-word-ipa">[tɑ̃]</span><span class="ph-word-zh">时间；天气</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">fr<em>an</em>çais</span><span class="ph-word-ipa">[fʀɑ̃sɛ]</span><span class="ph-word-zh">法语；法国人</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">p<em>en</em>dant</span><span class="ph-word-ipa">[pɑ̃dɑ̃]</span><span class="ph-word-zh">在……期间</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">s<em>an</em>s</span><span class="ph-word-ipa">[sɑ̃]</span><span class="ph-word-zh">没有，无</span><button class="ph-word-btn">🔊 听</button></div>
+        </div>
+      </div>
+
+      <!-- [ɔ̃] -->
+      <div class="phoneme-detail-card">
+        <div class="ph-left">
+          <div class="ph-big-ipa">[ɔ̃]</div>
+          <div class="ph-type-tag">鼻化后元音</div>
+          <svg class="ph-mouth-svg" width="70" height="55" viewBox="0 0 70 55">
+            <ellipse cx="35" cy="27" rx="28" ry="22" fill="#fde8d8" stroke="#ccc" stroke-width="1.5"/>
+            <circle cx="35" cy="27" r="12" fill="#c0392b" opacity="0.15"/>
+            <circle cx="35" cy="27" r="7" fill="#7a1a10" opacity="0.6"/>
+            <path d="M28 15 Q35 8 42 15" stroke="#888" stroke-width="1.5" fill="none"/>
+            <text x="35" y="50" text-anchor="middle" font-size="9" fill="#888">圆唇·鼻音</text>
+          </svg>
+        </div>
+        <div class="ph-right">
+          <div class="ph-desc">嘴唇圆形（类似[ɔ]的口型），气流同时从口腔和鼻腔通过。字母组合on/om在大多数情况下发此音。</div>
+          <div class="ph-words-label">跟读例词</div>
+          <div class="ph-word-row"><span class="ph-word-fr">b<em>on</em></span><span class="ph-word-ipa">[bɔ̃]</span><span class="ph-word-zh">好的（阳性）</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">mais<em>on</em></span><span class="ph-word-ipa">[mɛzɔ̃]</span><span class="ph-word-zh">房子</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">b<em>on</em>jour</span><span class="ph-word-ipa">[bɔ̃ʒuʀ]</span><span class="ph-word-zh">你好，早上好</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">pr<em>on</em>om</span><span class="ph-word-ipa">[pʀɔnɔ̃]</span><span class="ph-word-zh">代词</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">s<em>on</em></span><span class="ph-word-ipa">[sɔ̃]</span><span class="ph-word-zh">他的/她的（形容词）</span><button class="ph-word-btn">🔊 听</button></div>
+        </div>
+      </div>
+
+      <!-- [ɛ̃] -->
+      <div class="phoneme-detail-card">
+        <div class="ph-left">
+          <div class="ph-big-ipa">[ɛ̃]</div>
+          <div class="ph-type-tag">鼻化前元音</div>
+          <svg class="ph-mouth-svg" width="70" height="55" viewBox="0 0 70 55">
+            <ellipse cx="35" cy="27" rx="28" ry="22" fill="#fde8d8" stroke="#ccc" stroke-width="1.5"/>
+            <ellipse cx="35" cy="28" rx="18" ry="8" fill="#c0392b" opacity="0.15"/>
+            <ellipse cx="35" cy="29" rx="12" ry="4.5" fill="#7a1a10" opacity="0.6"/>
+            <path d="M28 15 Q35 8 42 15" stroke="#888" stroke-width="1.5" fill="none"/>
+            <text x="35" y="50" text-anchor="middle" font-size="9" fill="#888">嘴角开·鼻音</text>
+          </svg>
+        </div>
+        <div class="ph-right">
+          <div class="ph-desc">嘴角向两侧拉开（类似[ɛ]），同时气流通过鼻腔。字母组合in/im/ain/aim/ein均发此音。</div>
+          <div class="ph-words-label">跟读例词</div>
+          <div class="ph-word-row"><span class="ph-word-fr">v<em>in</em></span><span class="ph-word-ipa">[vɛ̃]</span><span class="ph-word-zh">葡萄酒</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">m<em>ain</em></span><span class="ph-word-ipa">[mɛ̃]</span><span class="ph-word-zh">手</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">m<em>at</em><em>in</em></span><span class="ph-word-ipa">[matɛ̃]</span><span class="ph-word-zh">早晨</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">s<em>im</em>ple</span><span class="ph-word-ipa">[sɛ̃pl]</span><span class="ph-word-zh">简单的</span><button class="ph-word-btn">🔊 听</button></div>
+          <div class="ph-word-row"><span class="ph-word-fr">b<em>ien</em></span><span class="ph-word-ipa">[bjɛ̃]</span><span class="ph-word-zh">好，很好</span><button class="ph-word-btn">🔊 听</button></div>
+        </div>
+      </div>
+
       <div class="next-wrap"><button class="btn-check" onclick="goStep(0,1)">发音规则 →</button></div>
     </div>
 
-    <!-- Step 1: 发音规则 -->
+    <!-- Step 1: 发音规则 (保持原版) -->
     <div class="step-panel" id="lv0s1">
       <div class="section-label">关键字母组合发音规则</div>
       <div class="rule-card">
@@ -820,29 +1171,61 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
       <div class="next-wrap"><button class="btn-check" onclick="goStep(0,2)">跟读练习 →</button></div>
     </div>
 
-    <!-- Step 2: 跟读 -->
+    <!-- Step 2: 跟读练习 - 5个含本课音素的中等长度句子 -->
     <div class="step-panel" id="lv0s2">
-      <div class="section-label">跟读练习 · 听示范 → 跟读 → 获得评分</div>
+      <div class="section-label">跟读练习 · 5句 · 含本课核心音素 · 听示范 → 跟读 → 获得评分</div>
+      <div class="tip-box" style="margin-bottom:20px"><span class="tip-icon">💡</span><span>这5个句子涵盖了本课学习的主要元音音素，注意体会每个加粗字母的发音。</span></div>
+
       <div class="follow-item">
-        <div class="follow-text"><div class="follow-fr">Bonjour !</div><div class="follow-ipa">[bɔ̃ʒuʀ]</div><div class="follow-zh">你好！</div></div>
+        <div class="follow-text">
+          <div class="follow-fr">Mon ami habite dans une petite rue, près du musée.</div>
+          <div class="follow-ipa">[mɔ̃ nami abit dɑ̃ yn pətit ʀy pʀɛ dy myze]</div>
+          <div class="follow-zh">我的朋友住在一条小街道上，靠近博物馆。</div>
+          <div style="font-size:11.5px;color:var(--muted);margin-top:4px">音素重点：[ɔ̃] mon · [a] ami · [ɑ̃] dans · [y] une/rue/musée · [ø] peu</div>
+        </div>
         <div class="follow-btns"><button class="btn-outline">🔊 听示范</button><button class="btn-check">🎙 跟读</button></div>
       </div>
+
       <div class="follow-item">
-        <div class="follow-text"><div class="follow-fr">Merci beaucoup.</div><div class="follow-ipa">[mɛʀsi boku]</div><div class="follow-zh">非常感谢。</div></div>
+        <div class="follow-text">
+          <div class="follow-fr">Il fait beau aujourd'hui, alors je vais au café avec vous.</div>
+          <div class="follow-ipa">[il fɛ bo oʒuʀdɥi alɔʀ ʒə vɛ o kafe avɛk vu]</div>
+          <div class="follow-zh">今天天气好，所以我要和你们一起去咖啡馆。</div>
+          <div style="font-size:11.5px;color:var(--muted);margin-top:4px">音素重点：[e] beau/café · [ɛ] fait/avec · [o] beau/au · [u] vous</div>
+        </div>
         <div class="follow-btns"><button class="btn-outline">🔊 听示范</button><button class="btn-check">🎙 跟读</button></div>
       </div>
+
       <div class="follow-item">
-        <div class="follow-text"><div class="follow-fr">Comment vous appelez-vous ?</div><div class="follow-ipa">[kɔmɑ̃ vu zaple vu]</div><div class="follow-zh">您叫什么名字？</div></div>
+        <div class="follow-text">
+          <div class="follow-fr">La maison de ma famille est grande et très bien située en ville.</div>
+          <div class="follow-ipa">[la mɛzɔ̃ də ma famij ɛ gʀɑ̃d e tʀɛ bjɛ̃ sitɥe ɑ̃ vil]</div>
+          <div class="follow-zh">我家的房子很大，位于市中心，位置非常好。</div>
+          <div style="font-size:11.5px;color:var(--muted);margin-top:4px">音素重点：[ɛ̃] main/bien · [ɔ̃] maison · [ɑ̃] grande/en · [ɛ] est/très</div>
+        </div>
         <div class="follow-btns"><button class="btn-outline">🔊 听示范</button><button class="btn-check">🎙 跟读</button></div>
       </div>
+
       <div class="follow-item">
-        <div class="follow-text"><div class="follow-fr">Je ne comprends pas.</div><div class="follow-ipa">[ʒə nə kɔ̃pʀɑ̃ pa]</div><div class="follow-zh">我不明白。</div></div>
+        <div class="follow-text">
+          <div class="follow-fr">Tu veux du vin rouge ou du jus d'orange pour ce soir ?</div>
+          <div class="follow-ipa">[ty vø dy vɛ̃ ʀuʒ u dy ʒy dɔʀɑ̃ʒ puʀ sə swaʀ]</div>
+          <div class="follow-zh">你今晚想要红葡萄酒还是橙汁？</div>
+          <div style="font-size:11.5px;color:var(--muted);margin-top:4px">音素重点：[y] tu/du/jus · [ø] veux · [ɛ̃] vin · [u] rouge/ou/pour · [ɑ̃] orange</div>
+        </div>
         <div class="follow-btns"><button class="btn-outline">🔊 听示范</button><button class="btn-check">🎙 跟读</button></div>
       </div>
+
       <div class="follow-item">
-        <div class="follow-text"><div class="follow-fr">Où est la gare, s'il vous plaît ?</div><div class="follow-ipa">[u ɛ la gaʀ sil vu plɛ]</div><div class="follow-zh">请问火车站在哪里？</div></div>
+        <div class="follow-text">
+          <div class="follow-fr">Les enfants aiment chanter des chansons simples en français pendant le cours.</div>
+          <div class="follow-ipa">[le zɑ̃fɑ̃ ɛm ʃɑ̃te de ʃɑ̃sɔ̃ sɛ̃pl ɑ̃ fʀɑ̃sɛ pɑ̃dɑ̃ lə kuʀ]</div>
+          <div class="follow-zh">孩子们喜欢在法语课上唱简单的歌曲。</div>
+          <div style="font-size:11.5px;color:var(--muted);margin-top:4px">音素重点：[ɑ̃] enfants/chanter/chansons/en/pendant · [ɛ̃] simples · [ɔ̃] chansons · [ɛ] aiment/les/français</div>
+        </div>
         <div class="follow-btns"><button class="btn-outline">🔊 听示范</button><button class="btn-check">🎙 跟读</button></div>
       </div>
+
       <div class="complete-box">
         <span class="complete-icon">✓</span>
         <div class="complete-title">发音课 · 课2 完成</div>
@@ -851,6 +1234,7 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
     </div>
   </div>
 </div>
+
 
 <!-- ─────────────── LEVEL 1: A1 ─────────────── -->
 <div class="panel" id="lv1">
@@ -1036,9 +1420,9 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
 <!-- ─────────────── LEVEL 2: A2 ─────────────── -->
 <div class="panel" id="lv2">
   <div class="lesson-header">
-    <div class="lesson-level-tag"><span class="level-pip" style="background:var(--lv2)"></span>A2 · 单元1 — 课4</div>
-    <h1 class="lesson-title">两种过去时的对比使用</h1>
-    <p class="lesson-subtitle">Passé composé vs Imparfait · 叙述过去事件与背景描述</p>
+    <div class="lesson-level-tag"><span class="level-pip" style="background:var(--lv2)"></span>A2 · 单元1 — 课3</div>
+    <h1 class="lesson-title">旅行见闻</h1>
+    <p class="lesson-subtitle">Récit de voyage · 描述旅行经历 · 复合过去时与未完成过去时综合运用</p>
   </div>
   <div class="step-bar" id="tabs2">
     <div class="step-tab active" onclick="goStep(2,0)">对话</div>
@@ -1052,34 +1436,46 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
 
     <!-- 对话 -->
     <div class="step-panel active" id="lv2s0">
-      <div class="section-label">场景对话 · 朋友聊上周末发生的事</div>
+      <div class="section-label">场景对话 · 同事聊刚结束的旅行</div>
       <div class="dialogue">
-        <div class="d-row"><div class="d-avatar">👩</div><div class="d-bubble"><div class="d-fr">Tu as passé un bon week-end ?</div><div class="d-zh">你周末过得好吗？</div><button class="d-audio">🔊 听</button></div></div>
-        <div class="d-row right"><div class="d-avatar">🙋</div><div class="d-bubble clearfix"><div class="d-fr">Oui, super ! Samedi, j'ai visité le musée d'Orsay. Il y avait beaucoup de monde, mais c'était magnifique.</div><div class="d-zh">好极了！周六，我参观了奥赛博物馆。人很多，但非常漂亮。</div><button class="d-audio">🔊 听</button></div></div>
-        <div class="d-row"><div class="d-avatar">👩</div><div class="d-bubble"><div class="d-fr">Oh, tu y es allé seul ?</div><div class="d-zh">哦，你一个人去的吗？</div><button class="d-audio">🔊 听</button></div></div>
-        <div class="d-row right"><div class="d-avatar">🙋</div><div class="d-bubble clearfix"><div class="d-fr">Non, j'y suis allé avec Marie. On a déjeuné dans un petit restaurant près du musée. La nourriture était délicieuse !</div><div class="d-zh">不，我和Marie一起去的。我们在博物馆附近的一家小餐馆吃了午饭。菜很好吃！</div><button class="d-audio">🔊 听</button></div></div>
-        <div class="d-row"><div class="d-avatar">👩</div><div class="d-bubble"><div class="d-fr">Et dimanche, qu'est-ce que tu as fait ?</div><div class="d-zh">那周日，你做了什么？</div><button class="d-audio">🔊 听</button></div></div>
-        <div class="d-row right"><div class="d-avatar">🙋</div><div class="d-bubble clearfix"><div class="d-fr">Dimanche, je me suis reposé. Il faisait mauvais alors je suis resté chez moi.</div><div class="d-zh">周日，我休息了。天气不好，所以我待在家里。</div><button class="d-audio">🔊 听</button></div></div>
+        <div class="d-row"><div class="d-avatar">👩</div><div class="d-bubble"><div class="d-fr">Alors, ce voyage à Lyon ? Tu es rentré quand ?</div><div class="d-zh">那么，去里昂的旅行怎么样？你什么时候回来的？</div><button class="d-audio">🔊 听</button></div></div>
+        <div class="d-row right"><div class="d-avatar">🙋</div><div class="d-bubble clearfix"><div class="d-fr">Je suis rentré hier soir. C'était vraiment un voyage magnifique ! J'ai visité la vieille ville pendant deux jours complets.</div><div class="d-zh">我昨晚回来的。真的是一次极好的旅行！我用了整整两天参观了老城区。</div><button class="d-audio">🔊 听</button></div></div>
+        <div class="d-row"><div class="d-avatar">👩</div><div class="d-bubble"><div class="d-fr">Il faisait beau là-bas ?</div><div class="d-zh">那边天气好吗？</div><button class="d-audio">🔊 听</button></div></div>
+        <div class="d-row right"><div class="d-avatar">🙋</div><div class="d-bubble clearfix"><div class="d-fr">Oui, le temps était parfait. Il faisait chaud mais pas trop. J'ai pris beaucoup de photos des monuments historiques.</div><div class="d-zh">是的，天气完美。很暖和但不太热。我拍了很多历史建筑的照片。</div><button class="d-audio">🔊 听</button></div></div>
+        <div class="d-row"><div class="d-avatar">👩</div><div class="d-bubble"><div class="d-fr">Tu as mangé des spécialités locales ?</div><div class="d-zh">你吃了当地特色菜吗？</div><button class="d-audio">🔊 听</button></div></div>
+        <div class="d-row right"><div class="d-avatar">🙋</div><div class="d-bubble clearfix"><div class="d-fr">Bien sûr ! J'ai goûté la quenelle et le gratin dauphinois. Les restaurants du centre-ville étaient très animés le soir.</div><div class="d-zh">当然！我品尝了里昂丸子和奶酪烤土豆。市中心的餐厅晚上非常热闹。</div><button class="d-audio">🔊 听</button></div></div>
+        <div class="d-row"><div class="d-avatar">👩</div><div class="d-bubble"><div class="d-fr">Et tu as eu des problèmes pendant le voyage ?</div><div class="d-zh">旅途中有遇到什么问题吗？</div><button class="d-audio">🔊 听</button></div></div>
+        <div class="d-row right"><div class="d-avatar">🙋</div><div class="d-bubble clearfix"><div class="d-fr">Un peu ! Mon train avait du retard au départ, donc je suis arrivé à l'hôtel assez tard. Mais les gens étaient vraiment accueillants et sympa.</div><div class="d-zh">有一点！我的火车出发时晚点了，所以我到酒店时已经很晚了。但当地人真的很热情友好。</div><button class="d-audio">🔊 听</button></div></div>
       </div>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(2,1)">词汇 →</button></div>
     </div>
 
     <!-- 词汇 -->
     <div class="step-panel" id="lv2s1">
-      <div class="section-label">本课词汇 · 20词</div>
+      <div class="section-label">本课词汇 · 20词 · 听音 · 跟读</div>
       <table class="vocab-table">
-        <thead><tr><th>法语</th><th style="width:60px">词性</th><th>释义</th><th></th></tr></thead>
+        <thead><tr><th>法语</th><th style="width:70px">词性</th><th>释义</th><th></th></tr></thead>
         <tbody>
-          <tr><td class="v-fr">visiter</td><td class="v-pos">v.</td><td><div class="v-zh">参观，游览</div><div class="v-ex">J'ai visité le Louvre hier. — 我昨天参观了卢浮宫。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">il y avait</td><td class="v-pos">loc.</td><td><div class="v-zh">有（过去存在，imparfait）</div><div class="v-ex">Il y avait beaucoup de monde. — 有很多人。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">magnifique</td><td class="v-pos">adj.</td><td><div class="v-zh">壮观的，极美的</div><div class="v-ex">La vue était magnifique. — 景色极美。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">déjeuner</td><td class="v-pos">v./n.m.</td><td><div class="v-zh">吃午饭；午饭</div><div class="v-ex">On a déjeuné ensemble. — 我们一起吃了午饭。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">près de</td><td class="v-pos">prép.</td><td><div class="v-zh">在……附近</div><div class="v-ex">Il habite près de la gare. — 他住在车站附近。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">délicieux / -euse</td><td class="v-pos">adj.</td><td><div class="v-zh">美味的</div><div class="v-ex">Ce gâteau est délicieux ! — 这个蛋糕真好吃！</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">se reposer</td><td class="v-pos">v. réfl.</td><td><div class="v-zh">休息</div><div class="v-ex">Je me suis reposé tout le dimanche. — 我整个周日都在休息。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">il faisait mauvais</td><td class="v-pos">loc.</td><td><div class="v-zh">天气不好（描述过去天气）</div><div class="v-ex">Il faisait froid et il pleuvait. — 天很冷而且在下雨。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">rester chez soi</td><td class="v-pos">loc.</td><td><div class="v-zh">待在家里</div><div class="v-ex">Je préfère rester chez moi ce soir. — 我今晚宁愿待在家。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">alors</td><td class="v-pos">conj.</td><td><div class="v-zh">所以，于是</div><div class="v-ex">Il était fatigué, alors il est parti. — 他累了，所以就走了。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">un voyage</td><td class="v-pos">n.m.</td><td><div class="v-zh">旅行，旅途</div><div class="v-ex">C'était un voyage inoubliable. — 那是一次难忘的旅行。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">rentrer</td><td class="v-pos">v.</td><td><div class="v-zh">回来，返回（家）</div><div class="v-ex">Je suis rentré hier soir. — 我昨晚回来的。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">magnifique</td><td class="v-pos">adj.</td><td><div class="v-zh">极好的，壮观的</div><div class="v-ex">La vue depuis la colline était magnifique. — 从山顶看的景色极为壮观。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">la vieille ville</td><td class="v-pos">loc.</td><td><div class="v-zh">老城区</div><div class="v-ex">La vieille ville de Lyon est classée au patrimoine mondial. — 里昂老城已列入世界遗产。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">parfait(e)</td><td class="v-pos">adj.</td><td><div class="v-zh">完美的，极好的</div><div class="v-ex">Le timing était parfait. — 时机完美。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">prendre des photos</td><td class="v-pos">loc.</td><td><div class="v-zh">拍照</div><div class="v-ex">J'ai pris beaucoup de photos. — 我拍了很多照片。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">un monument historique</td><td class="v-pos">loc.</td><td><div class="v-zh">历史建筑，古迹</div><div class="v-ex">Cette église est un monument historique. — 这座教堂是历史建筑。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">goûter</td><td class="v-pos">v.</td><td><div class="v-zh">品尝，尝一尝</div><div class="v-ex">Tu dois goûter cette tarte ! — 你一定要尝尝这个挞！</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">une spécialité locale</td><td class="v-pos">loc.</td><td><div class="v-zh">当地特色（菜），特产</div><div class="v-ex">Quelles sont les spécialités locales ici ? — 这里有什么当地特色菜？</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">animé(e)</td><td class="v-pos">adj.</td><td><div class="v-zh">热闹的，充满活力的</div><div class="v-ex">Le marché est très animé le week-end. — 周末市场非常热闹。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">avoir du retard</td><td class="v-pos">loc.</td><td><div class="v-zh">晚点，延误</div><div class="v-ex">Mon train a eu deux heures de retard. — 我的火车晚点了两个小时。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">un hôtel</td><td class="v-pos">n.m.</td><td><div class="v-zh">酒店，宾馆</div><div class="v-ex">J'ai réservé un hôtel en centre-ville. — 我在市中心订了一家酒店。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">accueillant(e)</td><td class="v-pos">adj.</td><td><div class="v-zh">热情好客的，友善的</div><div class="v-ex">Les habitants sont très accueillants. — 当地居民非常热情好客。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">sympa</td><td class="v-pos">adj.inv.</td><td><div class="v-zh">友好的，和善的（口语，sympathique缩写）</div><div class="v-ex">Tes collègues ont l'air sympa. — 你的同事们看起来很友善。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">au départ</td><td class="v-pos">loc.</td><td><div class="v-zh">出发时，刚开始</div><div class="v-ex">Au départ, je n'étais pas sûr. — 一开始，我不太确定。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">donc</td><td class="v-pos">conj.</td><td><div class="v-zh">所以，因此</div><div class="v-ex">Il pleuvait, donc on est restés à l'intérieur. — 下雨了，所以我们待在室内。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">assez</td><td class="v-pos">adv.</td><td><div class="v-zh">相当，颇为；足够</div><div class="v-ex">Il était assez tard quand on est arrivés. — 我们到的时候已经相当晚了。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">complet / complète</td><td class="v-pos">adj.</td><td><div class="v-zh">完整的，全程的；客满的</div><div class="v-ex">J'ai passé une journée complète à visiter. — 我用了整整一天参观。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">vraiment</td><td class="v-pos">adv.</td><td><div class="v-zh">真的，确实</div><div class="v-ex">C'était vraiment délicieux. — 那真的很好吃。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">le centre-ville</td><td class="v-pos">n.m.</td><td><div class="v-zh">市中心</div><div class="v-ex">On s'est promenés dans le centre-ville toute l'après-midi. — 我们整个下午都在市中心散步。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
         </tbody>
       </table>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(2,2)">语法 →</button></div>
@@ -1093,48 +1489,37 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
         <div class="grammar-rule-box">
           <div class="grammar-rule-formula">Passé composé（PC）vs Imparfait（Imp）</div>
           <div class="grammar-rule-desc">
-            法语中叙述过去有两个核心时态，功能不同，必须配合使用：<br><br>
-            <strong>复合过去时（passé composé）</strong>：表示过去发生的、已经完成的<strong>具体动作或事件</strong>，相当于"做了……"。<br>
-            <strong>未完成过去时（imparfait）</strong>：表示过去的<strong>状态、背景、习惯性动作</strong>，相当于"当时……（一直是）"或"以前总是……"。
+            法语叙述过去用两个时态配合，功能截然不同：<br><br>
+            <strong>复合过去时（passé composé）</strong>：过去发生的具体动作或事件，强调"做了……"（已完成）。<br>
+            <strong>未完成过去时（imparfait）</strong>：过去的持续状态、背景描述、习惯性动作，强调"（当时）是……"。
           </div>
         </div>
-
         <div class="grammar-section-title">构成方式</div>
         <table class="contrast-table">
           <thead><tr><th>时态</th><th>构成</th><th>例</th></tr></thead>
           <tbody>
-            <tr><td><strong>复合过去时</strong></td><td>avoir/être（现在时）+ 过去分词</td><td>j'<strong>ai visité</strong>, je <strong>suis allé</strong></td></tr>
-            <tr><td><strong>未完成过去时</strong></td><td>动词词干（nous现在时变位去-ons）+ 词尾</td><td>il y <strong>avait</strong>, c'<strong>était</strong>, il <strong>faisait</strong></td></tr>
+            <tr><td><strong>复合过去时</strong></td><td>avoir/être（现在时）+ 过去分词</td><td>j'<strong>ai visité</strong>, je <strong>suis rentré</strong></td></tr>
+            <tr><td><strong>未完成过去时</strong></td><td>词干（nous现在时去-ons）+ -ais/-ais/-ait/-ions/-iez/-aient</td><td>il <strong>faisait</strong> chaud, c'<strong>était</strong> parfait</td></tr>
           </tbody>
         </table>
-
-        <div class="grammar-section-title">功能对比与例句</div>
-        <table class="contrast-table">
-          <thead><tr><th>用法</th><th>复合过去时（动作）</th><th>未完成过去时（状态/背景）</th></tr></thead>
-          <tbody>
-            <tr><td>叙事中的配合</td><td>J'<strong>ai visité</strong> le musée.</td><td>Il y <strong>avait</strong> beaucoup de monde.</td></tr>
-            <tr><td>翻译</td><td>我参观了博物馆。（动作）</td><td>（那里）人很多。（背景状态）</td></tr>
-            <tr><td>天气</td><td>Il <strong>a neigé</strong> hier.</td><td>Il <strong>faisait</strong> froid.</td></tr>
-            <tr><td>翻译</td><td>昨天下雪了。（事件）</td><td>天气很冷。（状态描述）</td></tr>
-          </tbody>
-        </table>
-
-        <div class="grammar-section-title">在对话中的应用</div>
+        <div class="grammar-section-title">来自对话的例句分析</div>
         <div class="example-list">
           <div class="example-item">
-            <div class="ex-fr">Samedi, j'<em>ai visité</em> le musée. Il y <em>avait</em> beaucoup de monde, mais c'<em>était</em> magnifique.</div>
-            <div class="ex-zh">周六我参观了博物馆（动作），人很多（背景），但非常漂亮（状态）。</div>
+            <div class="ex-fr">J'<em>ai visité</em> la vieille ville pendant deux jours. （PC）</div>
+            <div class="ex-zh">我参观了老城区两天。→ 完成的具体动作</div>
           </div>
           <div class="example-item">
-            <div class="ex-fr">Il <em>faisait</em> mauvais alors je <em>suis resté</em> chez moi.</div>
-            <div class="ex-zh">天气不好（背景状态），所以我待在家里（由背景引发的动作）。</div>
+            <div class="ex-fr">Il <em>faisait</em> chaud mais pas trop. （Imp）</div>
+            <div class="ex-zh">天气很暖和但不太热。→ 持续的背景状态</div>
+          </div>
+          <div class="example-item">
+            <div class="ex-fr">Mon train <em>avait</em> du retard, donc je <em>suis arrivé</em> tard. （Imp + PC）</div>
+            <div class="ex-zh">火车晚点了（状态），所以我晚到了（动作）。→ 背景引发动作</div>
           </div>
         </div>
-
         <div class="grammar-section-title">注意事项</div>
-        <div class="warning-box"><span class="warning-icon">⚠</span><span><strong>être 类动词的复合过去时</strong>：mouvement 动词（aller, venir, partir, arriver, entrer, sortir, monter, descendre, naître, mourir 等）和所有反身动词用 être 做助动词，过去分词需要与主语的性数配合。<br>Je <strong>suis allé</strong>（男）/ Je <strong>suis allée</strong>（女）</span></div>
-        <div class="warning-box"><span class="warning-icon">⚠</span><span><strong>过去分词性数配合（avec être）：</strong>Elle <strong>est partie</strong>（她走了）/ Ils <strong>sont partis</strong>（他们走了）/ Elles <strong>sont parties</strong>（她们走了）。用 avoir 时，过去分词通常不配合，除非宾语前置。</span></div>
-        <div class="tip-box"><span class="tip-icon">💡</span><span><strong>记忆技巧：</strong>把 imparfait 想象成"电影背景布景"（一直在那里），把 passé composé 想象成"演员的动作"（发生了、完成了）。两者在叙事中相互配合，缺一不可。</span></div>
+        <div class="warning-box"><span class="warning-icon">⚠</span><span><strong>être 类动词</strong>（移动动词+反身动词）用 être 做助动词，过去分词需配合主语性数。<br>Je <strong>suis rentré</strong>（男）/ Je <strong>suis rentrée</strong>（女）/ Nous <strong>sommes rentrés</strong></span></div>
+        <div class="tip-box"><span class="tip-icon">💡</span><span><strong>记忆法：</strong>把 imparfait 想象成"电影背景布景"（持续在那里），passé composé 想象成"演员的动作"（发生了、结束了）。两者一起才能讲清楚一段故事。</span></div>
       </div>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(2,3)">练习 →</button></div>
     </div>
@@ -1142,25 +1527,74 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
     <!-- 练习 -->
     <div class="step-panel" id="lv2s3">
       <div class="ex-section">
-        <div class="ex-type-badge">语法选择</div>
-        <div class="ex-question">选择正确的时态形式填入空格：<br><em>Quand j'étais petit, je _____ souvent à la mer avec ma famille.</em></div>
+        <div class="ex-type-badge">听力理解</div>
+        <div class="ex-question">根据对话，说话人在里昂遇到了什么问题？</div>
         <div class="mcq-list" id="a2m1">
-          <button class="mcq-opt" onclick="chk('a2m1',this,false)"><span class="opt-letter">A</span>suis allé</button>
-          <button class="mcq-opt" onclick="chk('a2m1',this,true)"><span class="opt-letter">B</span>allais</button>
-          <button class="mcq-opt" onclick="chk('a2m1',this,false)"><span class="opt-letter">C</span>vais</button>
-          <button class="mcq-opt" onclick="chk('a2m1',this,false)"><span class="opt-letter">D</span>ai allé</button>
+          <button class="mcq-opt" onclick="chk('a2m1',this,false)"><span class="opt-letter">A</span>找不到酒店</button>
+          <button class="mcq-opt" onclick="chk('a2m1',this,false)"><span class="opt-letter">B</span>天气很糟糕</button>
+          <button class="mcq-opt" onclick="chk('a2m1',this,true)"><span class="opt-letter">C</span>火车晚点，到酒店时间很晚</button>
+          <button class="mcq-opt" onclick="chk('a2m1',this,false)"><span class="opt-letter">D</span>当地人不友好</button>
         </div>
-        <div class="fb ok" style="display:block;margin-top:10px;display:none" id="a2fb1">提示：<em>quand j'étais petit</em>（小时候）表示过去的习惯性动作，应用 imparfait。</div>
+      </div>
+      <hr class="divider">
+      <div class="ex-section">
+        <div class="ex-type-badge">语法选择 · 选择正确时态</div>
+        <div class="ex-question">选择正确的时态形式：<br><em>Quand j'étais enfant, je _____ souvent à la mer avec mes parents.</em></div>
+        <div class="mcq-list" id="a2m2">
+          <button class="mcq-opt" onclick="chk('a2m2',this,false)"><span class="opt-letter">A</span>suis allé</button>
+          <button class="mcq-opt" onclick="chk('a2m2',this,true)"><span class="opt-letter">B</span>allais</button>
+          <button class="mcq-opt" onclick="chk('a2m2',this,false)"><span class="opt-letter">C</span>vais</button>
+          <button class="mcq-opt" onclick="chk('a2m2',this,false)"><span class="opt-letter">D</span>suis aller</button>
+        </div>
+      </div>
+      <hr class="divider">
+      <div class="ex-section">
+        <div class="ex-type-badge">语法选择 · 选择正确时态</div>
+        <div class="ex-question">选择正确的时态形式：<br><em>Hier, il _____ très beau, alors nous _____ nous promener dans le parc.</em></div>
+        <div class="mcq-list" id="a2m3">
+          <button class="mcq-opt" onclick="chk('a2m3',this,false)"><span class="opt-letter">A</span>a fait / sommes allés</button>
+          <button class="mcq-opt" onclick="chk('a2m3',this,true)"><span class="opt-letter">B</span>faisait / sommes allés</button>
+          <button class="mcq-opt" onclick="chk('a2m3',this,false)"><span class="opt-letter">C</span>faisait / allions</button>
+          <button class="mcq-opt" onclick="chk('a2m3',this,false)"><span class="opt-letter">D</span>a fait / allions</button>
+        </div>
       </div>
       <hr class="divider">
       <div class="ex-section">
         <div class="ex-type-badge">填空</div>
-        <div class="fill-hint">用括号中动词的正确过去时态填空（注意选择 PC 还是 Imp）</div>
-        <div class="fill-wrap" style="margin-bottom:10px">
-          <div class="fill-sentence">Hier, il _____ beau, alors nous <input class="fill-input" id="f2" placeholder="sortir → ?" style="width:150px"> nous promener.<br><small style="color:var(--muted)">(天气很好，所以我们出去散步了。il faisait beau 已给出)</small></div>
+        <div class="fill-hint">用 rentrer 的复合过去时填空（主语：je，男性）</div>
+        <div class="fill-wrap">
+          <div class="fill-sentence">Je <input class="fill-input" id="f2a" placeholder="______"> hier soir après le voyage.</div>
         </div>
-        <button class="btn-check" onclick="chkFill('f2','sommes sortis','fb2')">检查答案</button>
-        <div class="fb" id="fb2"></div>
+        <button class="btn-check" onclick="chkFill('f2a','suis rentré','fb2a')">检查答案</button>
+        <div class="fb" id="fb2a"></div>
+      </div>
+      <hr class="divider">
+      <div class="ex-section">
+        <div class="ex-type-badge">连线配对</div>
+        <div class="ex-question">将法语词与中文释义配对</div>
+        <div class="match-grid">
+          <div class="match-col" id="ml2">
+            <div class="match-item" onclick="mSel(this,'L','1','ml2','mr2','mf2')">accueillant</div>
+            <div class="match-item" onclick="mSel(this,'L','2','ml2','mr2','mf2')">goûter</div>
+            <div class="match-item" onclick="mSel(this,'L','3','ml2','mr2','mf2')">animé</div>
+            <div class="match-item" onclick="mSel(this,'L','4','ml2','mr2','mf2')">assez</div>
+          </div>
+          <div class="match-col" id="mr2">
+            <div class="match-item" onclick="mSel(this,'R','3','ml2','mr2','mf2')">热闹的</div>
+            <div class="match-item" onclick="mSel(this,'R','1','ml2','mr2','mf2')">热情好客的</div>
+            <div class="match-item" onclick="mSel(this,'R','4','ml2','mr2','mf2')">相当，颇为</div>
+            <div class="match-item" onclick="mSel(this,'R','2','ml2','mr2','mf2')">品尝</div>
+          </div>
+        </div>
+        <div class="fb" id="mf2"></div>
+      </div>
+      <hr class="divider">
+      <div class="ex-section">
+        <div class="ex-type-badge">句子改写</div>
+        <div class="ex-question">将下面的句子改写，把括号中的动词变为正确的时态（PC 或 Imp）：</div>
+        <div class="ex-sub">原句：<em>Les restaurants (être) très animés et on (manger) une spécialité locale.</em></div>
+        <textarea class="write-area" style="min-height:70px" placeholder="Les restaurants étaient très animés et on a mangé une spécialité locale."></textarea>
+        <div style="margin-top:8px;font-size:12.5px;color:var(--muted)">参考答案：Les restaurants <strong>étaient</strong> très animés（状态→Imp）et on <strong>a mangé</strong> une spécialité locale（动作→PC）.</div>
       </div>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(2,4)">口语 →</button></div>
     </div>
@@ -1168,12 +1602,13 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
     <!-- 口语 -->
     <div class="step-panel" id="lv2s4">
       <div class="section-label">AI陪练 · 选择话题开始对话</div>
-      <p class="body-text" style="margin-bottom:20px">结合本课语法，练习用法语描述过去的事情。AI将扮演对话伙伴，并在你使用错误时态时给出提示。</p>
+      <p class="body-text" style="margin-bottom:20px">练习用法语描述一次旅行或外出经历，AI会扮演感兴趣的朋友，并在你使用错误时态时给出提示。</p>
       <div class="speaking-list">
-        <div class="speaking-item"><span>🗓 讲述你上个周末做了什么</span><span class="speaking-arrow">›</span></div>
-        <div class="speaking-item"><span>🧒 描述你小时候的一段记忆</span><span class="speaking-arrow">›</span></div>
-        <div class="speaking-item"><span>✈️ 介绍你去过的一次旅行</span><span class="speaking-arrow">›</span></div>
-        <div class="speaking-item"><span>🌧 用天气+你的行动造5个句子</span><span class="speaking-arrow">›</span></div>
+        <div class="speaking-item"><span>✈️ 讲述你去过的一座城市</span><span class="speaking-arrow">›</span></div>
+        <div class="speaking-item"><span>🍽️ 介绍你在某地吃到的美食</span><span class="speaking-arrow">›</span></div>
+        <div class="speaking-item"><span>🚆 描述一次交通出行经历</span><span class="speaking-arrow">›</span></div>
+        <div class="speaking-item"><span>📸 向朋友介绍你最近拍的一张照片</span><span class="speaking-arrow">›</span></div>
+        <div class="speaking-item"><span>🏨 讲述你住过最难忘的一家酒店</span><span class="speaking-arrow">›</span></div>
       </div>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(2,5)">拓展 →</button></div>
     </div>
@@ -1182,30 +1617,31 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
     <div class="step-panel" id="lv2s5">
       <div class="section-label">真实素材 · 文化科普</div>
       <div class="ext-card">
-        <div class="ext-quote">« C'était une belle époque. »</div>
-        <div class="ext-src">🗣 法语日常高频表达</div>
-        <div class="ext-note"><em>C'était</em> 是 imparfait 最常用的形式之一，用于描述过去的状态或感受。<em>La Belle Époque</em>（美好年代）专指法国1871年至1914年的繁荣时期，这个词组本身就是 imparfait 语感的体现——那是一段持续的美好状态，而不是某个具体事件。</div>
+        <div class="ext-quote">Lyon, capitale mondiale de la gastronomie</div>
+        <div class="ext-src">🍴 法国饮食文化</div>
+        <div class="ext-note">里昂被称为"美食之都"，孕育了众多米其林星级餐厅。当地最具代表性的餐馆叫做"bouchon lyonnais"（里昂小酒馆），提供传统家常菜，如 quenelle（鱼肉或鸡肉丸子）、andouillette（香肠）和 gratin dauphinois（奶油烤土豆片）。去里昂旅行，吃是重要的文化体验之一。</div>
       </div>
       <div class="ext-card">
-        <div class="ext-quote">Le musée d'Orsay</div>
-        <div class="ext-src">🏛 法国文化 · 巴黎</div>
-        <div class="ext-note">奥赛博物馆（Musée d'Orsay）建于原火车站，收藏1848至1914年的艺术作品，以印象派画作闻名——莫奈、雷诺阿、梵高的大量真迹均在此。它与卢浮宫（古典艺术）、蓬皮杜（现代艺术）共同构成巴黎三大美术馆体系，法语考试中也频繁作为阅读材料出现。</div>
+        <div class="ext-quote">Le train en France : TGV et retards</div>
+        <div class="ext-src">🚄 法国铁路文化</div>
+        <div class="ext-note">法国高铁 TGV（Train à Grande Vitesse）以速度著称，巴黎到里昂仅需约两小时。但法国火车偶尔也会晚点（avoir du retard），尤其是发生罢工（grève）的时候。遇到晚点，法国人一般会在站台等待，收到短信通知，或查阅SNCF（法国国铁）的应用程序。</div>
       </div>
       <div class="complete-box">
         <span class="complete-icon">✓</span>
-        <div class="complete-title">A2 · 单元1 课4 完成</div>
-        <div class="complete-sub">下一步：单元1复习 + 测试</div>
+        <div class="complete-title">A2 · 单元1 课3 完成</div>
+        <div class="complete-sub">下一课：在餐厅点餐与订座</div>
       </div>
     </div>
   </div>
 </div>
 
+
 <!-- ─────────────── LEVEL 3: B1 ─────────────── -->
 <div class="panel" id="lv3">
   <div class="lesson-header">
-    <div class="lesson-level-tag"><span class="level-pip" style="background:var(--lv3)"></span>B1 · 单元2 — 课2</div>
-    <h1 class="lesson-title">条件句：非真实假设</h1>
-    <p class="lesson-subtitle">Si + imparfait + conditionnel présent · 假设与推断</p>
+    <div class="lesson-level-tag"><span class="level-pip" style="background:var(--lv3)"></span>B1 · 单元1 — 课2</div>
+    <h1 class="lesson-title">城市交通</h1>
+    <p class="lesson-subtitle">Les transports urbains · 阅读城市交通议题短文 · 条件句与比较级综合运用</p>
   </div>
   <div class="step-bar" id="tabs3">
     <div class="step-tab active" onclick="goStep(3,0)">课文</div>
@@ -1214,20 +1650,22 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
     <div class="step-tab" onclick="goStep(3,3)">练习</div>
     <div class="step-tab" onclick="goStep(3,4)">写作</div>
     <div class="step-tab" onclick="goStep(3,5)">口语</div>
+    <div class="step-tab" onclick="goStep(3,6)">拓展</div>
   </div>
   <div class="content-area">
 
     <!-- 课文 -->
     <div class="step-panel active" id="lv3s0">
-      <div class="section-label">课文阅读 · 约170词 · 点击高亮词查看注释</div>
+      <div class="section-label">课文阅读 · 约180词 · 点击高亮词查看注释</div>
       <div class="reading-actions">
         <button class="btn-outline">🔊 听全文</button>
         <button class="btn-outline">🎙 跟读全文</button>
       </div>
       <div class="reading-card">
-        <p>Si j'avais plus de temps libre, je <span class="hl" title="旅行，到处走走">voyagerais</span> davantage. C'est ce que beaucoup de Français déclarent dans un <span class="hl" title="调查，民调">sondage</span> récent sur les loisirs. Face aux <span class="hl" title="约束，限制">contraintes</span> du travail et de la vie quotidienne, le temps libre reste une <span class="hl" title="稀缺资源">ressource rare</span>.</p>
-        <p>Si les transports en commun étaient moins chers, plus de personnes <span class="hl" title="放弃，不再使用">renonceraient</span> à la voiture. Cette question est au cœur du débat sur la <span class="hl" title="生态转型">transition écologique</span> en France. Le gouvernement <span class="hl" title="估计，认为">estime</span> que si les investissements dans le train augmentaient de 30%, la fréquentation <span class="hl" title="增加，提升">progresserait</span> <span class="hl" title="显著地">significativement</span>.</p>
-        <p>Mais si chaque citoyen <span class="hl" title="减少">réduisait</span> ses trajets en voiture de seulement 10%, l'impact <span class="hl" title="气候">climatique</span> serait <span class="hl" title="可观的">considérable</span>. Les <span class="hl" title="专家">experts</span> <span class="hl" title="同意，一致认为">s'accordent</span> sur ce point : la solution ne viendra pas uniquement des politiques publiques, mais aussi des comportements individuels.</p>
+        <p>Dans les grandes <span class="hl" title="城市的，都市的">métropolitaines</span> françaises, la question des <span class="hl" title="交通，运输">transports</span> est devenue un enjeu <span class="hl" title="关键的，重大的">majeur</span>. Chaque jour, des millions de personnes <span class="hl" title="通勤，往返上班">font la navette</span> entre leur domicile et leur lieu de travail, souvent dans des conditions <span class="hl" title="令人不舒适的">inconfortables</span>.</p>
+        <p>Si les transports en commun étaient plus <span class="hl" title="可靠的，稳定的">fiables</span>, davantage de <span class="hl" title="通勤者">navetteurs</span> <span class="hl" title="放弃">renonceraient</span> à la voiture. Les experts estiment que si les <span class="hl" title="投资">investissements</span> dans le réseau ferroviaire <span class="hl" title="增加，提高">augmentaient</span> de manière <span class="hl" title="显著的，重要的">significative</span>, la <span class="hl" title="客流量，使用频率">fréquentation</span> pourrait progresser de 30%.</p>
+        <p>Par ailleurs, le vélo est de plus en plus <span class="hl" title="受欢迎的">populaire</span> dans les centres-villes. Certaines <span class="hl" title="市政府">municipalités</span> ont <span class="hl" title="建设，开发">développé</span> des <span class="hl" title="自行车道">pistes cyclables</span> sécurisées, ce qui a <span class="hl" title="减少">réduit</span> la <span class="hl" title="拥堵">congestion</span> dans certains <span class="hl" title="街区，地段">quartiers</span>.</p>
+        <p>Pourtant, les <span class="hl" title="郊区">banlieues</span> restent souvent mal <span class="hl" title="服务，覆盖">desservies</span> par les transports publics. Il est essentiel que les <span class="hl" title="地方当局">autorités locales</span> <span class="hl" title="优先考虑">priorisent</span> ces zones pour assurer une <span class="hl" title="平等，公平">équité</span> d'accès à la mobilité.</p>
       </div>
       <div style="font-size:12.5px;color:var(--muted);margin-top:-12px;margin-bottom:20px">💡 点击黄色高亮词可查看词义注释</div>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(3,1)">词汇 →</button></div>
@@ -1235,20 +1673,40 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
 
     <!-- 词汇 -->
     <div class="step-panel" id="lv3s1">
-      <div class="section-label">本课词汇与短语 · 30词</div>
+      <div class="section-label">本课词汇 · 30词 · 听音 · 跟读</div>
       <table class="vocab-table">
         <thead><tr><th>法语</th><th style="width:70px">词性</th><th>释义</th><th></th></tr></thead>
         <tbody>
-          <tr><td class="v-fr">voyager</td><td class="v-pos">v.</td><td><div class="v-zh">旅行，旅游</div><div class="v-ex">Elle voyage souvent pour son travail. — 她经常因工作出差。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">davantage</td><td class="v-pos">adv.</td><td><div class="v-zh">更多（强调程度，比 plus 更书面）</div><div class="v-ex">Il faudrait travailler davantage. — 需要更加努力工作。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">un sondage</td><td class="v-pos">n.m.</td><td><div class="v-zh">民调，调查</div><div class="v-ex">Selon un sondage récent... — 根据最近一项调查……</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">une contrainte</td><td class="v-pos">n.f.</td><td><div class="v-zh">约束，限制，压力</div><div class="v-ex">Les contraintes budgétaires sont importantes. — 预算限制很重要。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">renoncer à</td><td class="v-pos">v.</td><td><div class="v-zh">放弃，不再……</div><div class="v-ex">Il a renoncé à son projet. — 他放弃了他的计划。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">la transition écologique</td><td class="v-pos">loc.</td><td><div class="v-zh">生态转型（法国高频政治词汇）</div><div class="v-ex">La transition écologique est une priorité. — 生态转型是优先事项。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">estimer</td><td class="v-pos">v.</td><td><div class="v-zh">估计；认为（正式）</div><div class="v-ex">Les experts estiment que... — 专家们认为……</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">progresser</td><td class="v-pos">v.</td><td><div class="v-zh">进展，增长，提高</div><div class="v-ex">La situation a progressé. — 情况有所进展。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">significativement</td><td class="v-pos">adv.</td><td><div class="v-zh">显著地，明显地</div><div class="v-ex">Les résultats se sont améliorés significativement. — 结果明显改善。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">s'accorder sur</td><td class="v-pos">v. réfl.</td><td><div class="v-zh">在……上达成一致</div><div class="v-ex">Ils s'accordent sur l'essentiel. — 他们在要点上达成共识。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">les transports</td><td class="v-pos">n.m.pl.</td><td><div class="v-zh">交通，运输</div><div class="v-ex">Les transports en commun sont essentiels. — 公共交通至关重要。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">un enjeu</td><td class="v-pos">n.m.</td><td><div class="v-zh">挑战，议题，利害关系</div><div class="v-ex">C'est un enjeu politique important. — 这是一个重要的政治议题。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">faire la navette</td><td class="v-pos">loc.v.</td><td><div class="v-zh">通勤，往返上下班</div><div class="v-ex">Il fait la navette entre Paris et Lyon. — 他在巴黎和里昂之间通勤。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">inconfortable</td><td class="v-pos">adj.</td><td><div class="v-zh">不舒适的，令人不舒服的</div><div class="v-ex">Les sièges sont vraiment inconfortables. — 座位真的很不舒适。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">fiable</td><td class="v-pos">adj.</td><td><div class="v-zh">可靠的，稳定的</div><div class="v-ex">Ce service n'est pas très fiable. — 这项服务不太可靠。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">un navetteur</td><td class="v-pos">n.m.</td><td><div class="v-zh">通勤者，每日乘车上班的人</div><div class="v-ex">Les navetteurs souffrent des retards fréquents. — 通勤者深受频繁晚点之苦。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">renoncer à</td><td class="v-pos">v.</td><td><div class="v-zh">放弃，不再……</div><div class="v-ex">Il a renoncé à sa voiture. — 他放弃了用车。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">un investissement</td><td class="v-pos">n.m.</td><td><div class="v-zh">投资，资金投入</div><div class="v-ex">Des investissements importants sont nécessaires. — 需要大量投资。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">le réseau ferroviaire</td><td class="v-pos">loc.</td><td><div class="v-zh">铁路网络</div><div class="v-ex">Le réseau ferroviaire français est très développé. — 法国铁路网络非常发达。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">significatif / -ive</td><td class="v-pos">adj.</td><td><div class="v-zh">显著的，重要的</div><div class="v-ex">Une amélioration significative a été observée. — 观察到了明显的改善。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">la fréquentation</td><td class="v-pos">n.f.</td><td><div class="v-zh">客流量，使用频率，人流</div><div class="v-ex">La fréquentation du métro a augmenté. — 地铁客流量增加了。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">progresser</td><td class="v-pos">v.</td><td><div class="v-zh">增长，进展，提高</div><div class="v-ex">Les chiffres ont progressé de 15%. — 数字增长了15%。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">par ailleurs</td><td class="v-pos">loc.</td><td><div class="v-zh">此外，另一方面（连接词）</div><div class="v-ex">Par ailleurs, il faut noter que... — 此外，需要注意的是……</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">une piste cyclable</td><td class="v-pos">loc.</td><td><div class="v-zh">自行车道</div><div class="v-ex">La ville a construit 50 km de pistes cyclables. — 该市建设了50公里自行车道。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">sécurisé(e)</td><td class="v-pos">adj.</td><td><div class="v-zh">有安全保障的，安全的</div><div class="v-ex">Un espace de stationnement sécurisé. — 一个安全的停车区域。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">réduire</td><td class="v-pos">v.</td><td><div class="v-zh">减少，降低</div><div class="v-ex">On doit réduire les émissions de CO₂. — 我们必须减少二氧化碳排放。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">la congestion</td><td class="v-pos">n.f.</td><td><div class="v-zh">拥堵，堵塞（交通）</div><div class="v-ex">La congestion routière est un problème quotidien. — 交通拥堵是日常问题。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">un quartier</td><td class="v-pos">n.m.</td><td><div class="v-zh">街区，地段，社区</div><div class="v-ex">C'est un quartier résidentiel calme. — 这是一个安静的住宅街区。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">la banlieue</td><td class="v-pos">n.f.</td><td><div class="v-zh">郊区，近郊</div><div class="v-ex">Il habite en banlieue parisienne. — 他住在巴黎近郊。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">desservi(e)</td><td class="v-pos">adj.</td><td><div class="v-zh">有交通线路覆盖的（bien/mal desservi）</div><div class="v-ex">Cette zone est bien desservie par le métro. — 这一地区有地铁线路覆盖。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">essentiel(le)</td><td class="v-pos">adj.</td><td><div class="v-zh">至关重要的，必要的</div><div class="v-ex">Il est essentiel d'agir rapidement. — 迅速采取行动至关重要。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">une autorité locale</td><td class="v-pos">loc.</td><td><div class="v-zh">地方当局，市政机构</div><div class="v-ex">Les autorités locales ont pris des mesures. — 地方当局采取了措施。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">prioriser</td><td class="v-pos">v.</td><td><div class="v-zh">优先考虑，将……列为优先</div><div class="v-ex">Il faut prioriser les énergies renouvelables. — 需要优先发展可再生能源。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">l'équité</td><td class="v-pos">n.f.</td><td><div class="v-zh">公平，平等</div><div class="v-ex">L'équité d'accès aux soins est fondamentale. — 平等获得医疗资源是根本性的。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">la mobilité</td><td class="v-pos">n.f.</td><td><div class="v-zh">流动性，出行能力，机动性</div><div class="v-ex">La mobilité urbaine est en pleine transformation. — 城市出行方式正在深刻变革。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">une municipalité</td><td class="v-pos">n.f.</td><td><div class="v-zh">市政府，市政当局</div><div class="v-ex">La municipalité a voté un nouveau budget. — 市政府通过了新预算。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">pourtant</td><td class="v-pos">adv.</td><td><div class="v-zh">然而，但是（表转折）</div><div class="v-ex">Il travaille beaucoup. Pourtant, il n'est pas riche. — 他工作很努力，然而并不富裕。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">développer</td><td class="v-pos">v.</td><td><div class="v-zh">发展，开发，建设</div><div class="v-ex">Cette région développe son tourisme. — 这一地区正在发展旅游业。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">davantage</td><td class="v-pos">adv.</td><td><div class="v-zh">更多（程度副词，较书面）</div><div class="v-ex">Il faudrait investir davantage. — 需要投入更多资金。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">assurer</td><td class="v-pos">v.</td><td><div class="v-zh">确保，保障；承担</div><div class="v-ex">L'État assure la sécurité des citoyens. — 国家保障公民安全。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
         </tbody>
       </table>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(3,2)">语法 →</button></div>
@@ -1258,48 +1716,35 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
     <div class="step-panel" id="lv3s2">
       <div class="section-label">本课语法点</div>
       <div class="grammar-block">
-        <div class="block-title">非真实条件句：Si + 未完成过去时 + 条件式现在时</div>
+        <div class="block-title">非真实条件句：Si + imparfait + conditionnel présent</div>
         <div class="grammar-rule-box">
           <div class="grammar-rule-formula">Si + imparfait … conditionnel présent</div>
           <div class="grammar-rule-desc">
-            这类条件句表达的是<strong>与现在事实相反的假设</strong>，或者<strong>不太可能实现的愿望</strong>。中文对应"如果……的话，就会……"（但实际上并不是这样）。<br><br>
-            <strong>Si 从句</strong>用未完成过去时（imparfait）<br>
-            <strong>主句</strong>用条件式现在时（conditionnel présent）
+            表达与现实相反的假设，或不太可能实现的愿望。Si从句用未完成过去时，主句用条件式现在时。<br><br>
+            条件式现在时构成：<strong>将来时词干 + imparfait词尾</strong>（-ais/-ais/-ait/-ions/-iez/-aient）
           </div>
         </div>
-
-        <div class="grammar-section-title">条件式现在时构成</div>
-        <div class="tip-box"><span class="tip-icon">📌</span><span>条件式现在时 = <strong>将来时词干</strong> + <strong>imparfait 词尾</strong>（-ais / -ais / -ait / -ions / -iez / -aient）<br>例：voyager → voyager- + -ais → je <strong>voyagerais</strong><br>être → ser- + -ait → il <strong>serait</strong> &emsp; avoir → aur- + -ait → il <strong>aurait</strong></span></div>
-
-        <div class="grammar-section-title">例句（来自课文）</div>
+        <div class="grammar-section-title">来自课文的例句</div>
         <div class="example-list">
           <div class="example-item">
-            <div class="ex-fr">Si j'<em>avais</em> plus de temps libre, je <em>voyagerais</em> davantage.</div>
-            <div class="ex-zh">如果我有更多空闲时间，我会多旅行。（实际上没有那么多时间）</div>
+            <div class="ex-fr">Si les transports <em>étaient</em> plus fiables, davantage de navetteurs <em>renonceraient</em> à la voiture.</div>
+            <div class="ex-zh">如果公共交通更可靠，更多通勤者就会放弃开车。（现实中交通并不够可靠）</div>
           </div>
           <div class="example-item">
-            <div class="ex-fr">Si les transports en commun <em>étaient</em> moins chers, plus de personnes <em>renonceraient</em> à la voiture.</div>
-            <div class="ex-zh">如果公共交通更便宜，更多人会放弃开车。（现实中公共交通并不够便宜）</div>
-          </div>
-          <div class="example-item">
-            <div class="ex-fr">Si tu <em>habitais</em> à Paris, tu <em>pourrais</em> visiter tous les musées.</div>
-            <div class="ex-zh">如果你住在巴黎，你就能参观所有博物馆了。（你实际上不住在巴黎）</div>
+            <div class="ex-fr">Si les investissements <em>augmentaient</em> de manière significative, la fréquentation <em>pourrait</em> progresser de 30%.</div>
+            <div class="ex-zh">如果投资大幅增加，客流量可能增长30%。（目前投资尚未增加）</div>
           </div>
         </div>
-
-        <div class="grammar-section-title">三种条件句对比</div>
+        <div class="grammar-section-title">三种条件句对照</div>
         <table class="contrast-table">
           <thead><tr><th>类型</th><th>Si 从句</th><th>主句</th><th>含义</th></tr></thead>
           <tbody>
-            <tr><td><strong>可能条件</strong></td><td>présent</td><td>futur simple</td><td>如果…（可能发生）</td></tr>
-            <tr><td><strong>非真实条件</strong></td><td>imparfait</td><td>conditionnel présent</td><td>如果…（与现在相反）</td></tr>
-            <tr><td><strong>过去非真实</strong></td><td>plus-que-parfait</td><td>conditionnel passé</td><td>如果当时…（与过去相反）</td></tr>
+            <tr><td>可能条件</td><td>présent</td><td>futur simple</td><td>如果……（可能发生）</td></tr>
+            <tr><td><strong>非真实条件</strong></td><td><strong>imparfait</strong></td><td><strong>conditionnel présent</strong></td><td>如果……（与现在相反）</td></tr>
+            <tr><td>过去非真实</td><td>plus-que-parfait</td><td>conditionnel passé</td><td>如果当时……（与过去相反）</td></tr>
           </tbody>
         </table>
-
-        <div class="grammar-section-title">注意事项</div>
-        <div class="warning-box"><span class="warning-icon">⚠</span><span><strong>Si 后面绝对不能用条件式！</strong>这是法语学习者最常见的错误。不能说 <em>Si j'<strike>aurais</strike></em>，必须说 <em>Si j'<strong>avais</strong></em>。Si 从句只能用：présent / imparfait / plus-que-parfait。</span></div>
-        <div class="warning-box"><span class="warning-icon">⚠</span><span><strong>两个从句的顺序</strong>可以互换，意思不变：<br>• <em>Si j'avais le temps, j'<strong>irais</strong> au cinéma.</em><br>• <em>J'<strong>irais</strong> au cinéma si j'avais le temps.</em><br>注意：Si 置于主句后时，主句不用加逗号。</span></div>
+        <div class="warning-box"><span class="warning-icon">⚠</span><span><strong>Si 后绝不用条件式！</strong>不能说 <em>Si j'<strike>aurais</strike></em>，必须说 <em>Si j'<strong>avais</strong></em>。</span></div>
       </div>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(3,3)">练习 →</button></div>
     </div>
@@ -1308,31 +1753,52 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
     <div class="step-panel" id="lv3s3">
       <div class="ex-section">
         <div class="ex-type-badge">阅读理解</div>
-        <div class="ex-question">根据课文，政府对增加铁路投资有什么看法？</div>
+        <div class="ex-question">根据课文，郊区居民面临什么问题？</div>
         <div class="mcq-list" id="b1m1">
-          <button class="mcq-opt" onclick="chk('b1m1',this,false)"><span class="opt-letter">A</span>铁路投资已经足够多了</button>
-          <button class="mcq-opt" onclick="chk('b1m1',this,true)"><span class="opt-letter">B</span>若铁路投资增加30%，客流量将明显提升</button>
-          <button class="mcq-opt" onclick="chk('b1m1',this,false)"><span class="opt-letter">C</span>铁路投资与气候变化无关</button>
-          <button class="mcq-opt" onclick="chk('b1m1',this,false)"><span class="opt-letter">D</span>政府反对增加交通投资</button>
+          <button class="mcq-opt" onclick="chk('b1m1',this,false)"><span class="opt-letter">A</span>骑自行车不安全</button>
+          <button class="mcq-opt" onclick="chk('b1m1',this,true)"><span class="opt-letter">B</span>公共交通线路覆盖不足</button>
+          <button class="mcq-opt" onclick="chk('b1m1',this,false)"><span class="opt-letter">C</span>市区拥堵影响了郊区</button>
+          <button class="mcq-opt" onclick="chk('b1m1',this,false)"><span class="opt-letter">D</span>地方当局不重视交通问题</button>
         </div>
       </div>
       <hr class="divider">
       <div class="ex-section">
-        <div class="ex-type-badge">句子改写</div>
-        <div class="ex-question">将下面的可能条件句改写为非真实条件句：</div>
-        <div class="ex-sub">原句：<em>Si tu as le temps, tu viendras avec nous.</em>（如果你有时间，你会和我们一起来。）</div>
-        <div class="fill-wrap">
-          <div class="fill-sentence">Si tu <input class="fill-input" id="f3" placeholder="avais (imparfait)" style="width:180px"> le temps, tu <input class="fill-input" id="f3b" placeholder="viendrais (cond.)" style="width:180px"> avec nous.</div>
+        <div class="ex-type-badge">阅读理解</div>
+        <div class="ex-question">自行车道的修建带来了什么直接效果？</div>
+        <div class="mcq-list" id="b1m2">
+          <button class="mcq-opt" onclick="chk('b1m2',this,false)"><span class="opt-letter">A</span>铁路客流量提升了30%</button>
+          <button class="mcq-opt" onclick="chk('b1m2',this,false)"><span class="opt-letter">B</span>郊区的交通得到改善</button>
+          <button class="mcq-opt" onclick="chk('b1m2',this,true)"><span class="opt-letter">C</span>部分街区的交通拥堵减少</button>
+          <button class="mcq-opt" onclick="chk('b1m2',this,false)"><span class="opt-letter">D</span>通勤者完全放弃了汽车</button>
         </div>
-        <button class="btn-check" onclick="chkFillDouble('f3','avais','f3b','viendrais','fb3')">检查答案</button>
+      </div>
+      <hr class="divider">
+      <div class="ex-section">
+        <div class="ex-type-badge">句子改写 · 非真实条件句</div>
+        <div class="ex-question">将下面的可能条件句改写为非真实条件句：</div>
+        <div class="ex-sub">原句：<em>Si les pistes cyclables sont sécurisées, plus de gens utiliseront le vélo.</em></div>
+        <div class="fill-wrap">
+          <div class="fill-sentence">Si les pistes cyclables <input class="fill-input" id="f3a" placeholder="étaient" style="width:140px"> sécurisées, plus de gens <input class="fill-input" id="f3b" placeholder="utiliseraient" style="width:170px"> le vélo.</div>
+        </div>
+        <button class="btn-check" onclick="chkFillDouble('f3a','étaient','f3b','utiliseraient','fb3')">检查答案</button>
         <div class="fb" id="fb3"></div>
       </div>
       <hr class="divider">
       <div class="ex-section">
+        <div class="ex-type-badge">填空 · 词汇应用</div>
+        <div class="fill-hint">选用 congestion / fiable / navetteurs / quartiers 填入合适位置</div>
+        <div class="fill-wrap">
+          <div class="fill-sentence">Les <input class="fill-input" id="f3c" placeholder="____" style="width:130px"> souffrent chaque matin d'une <input class="fill-input" id="f3d" placeholder="____" style="width:130px"> terrible sur les autoroutes.</div>
+        </div>
+        <button class="btn-check" onclick="chkFillDouble('f3c','navetteurs','f3d','congestion','fb3c')">检查答案</button>
+        <div class="fb" id="fb3c"></div>
+      </div>
+      <hr class="divider">
+      <div class="ex-section">
         <div class="ex-type-badge">段落主旨</div>
-        <div class="ex-question">用一句话概括课文第三段的主要论点：</div>
-        <textarea class="write-area" style="min-height:70px" placeholder="用中文或法语写出段落主旨……"></textarea>
-        <div style="margin-top:10px;font-size:12.5px;color:var(--muted)">参考答案：每个公民减少10%的汽车出行，将对气候产生重大影响；解决方案需要公共政策与个人行为共同推进。</div>
+        <div class="ex-question">用一句话（法语或中文）概括课文的核心观点：</div>
+        <textarea class="write-area" style="min-height:70px" placeholder="写出课文的核心观点……"></textarea>
+        <div style="margin-top:8px;font-size:12.5px;color:var(--muted)">参考答案：城市交通面临通勤压力大、郊区覆盖不足等挑战，加大公共交通投资、发展自行车道、实现公平出行是关键解决方向。</div>
       </div>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(3,4)">写作 →</button></div>
     </div>
@@ -1340,8 +1806,8 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
     <!-- 写作 -->
     <div class="step-panel" id="lv3s4">
       <div class="section-label">写作练习 · 80-100词</div>
-      <div class="write-prompt"><strong>题目：</strong>Si vous pouviez changer une chose dans votre ville, qu'est-ce que vous changeriez et pourquoi ?<br>（如果你能改变你所在城市的一件事，你会改变什么？为什么？）<br><br>要求：使用本课语法点（si + imparfait + conditionnel），80-100词，法语作答。</div>
-      <textarea class="write-area" style="min-height:140px" placeholder="Si je pouvais changer une chose dans ma ville, je..."></textarea>
+      <div class="write-prompt"><strong>题目：</strong>Si vous pouviez améliorer les transports dans votre ville, que feriez-vous en priorité ?<br>（如果你能改善你所在城市的交通，你会优先做什么？）<br><br>要求：使用非真实条件句（si + imparfait + conditionnel），给出至少两项措施，80-100词，法语作答。</div>
+      <textarea class="write-area" style="min-height:140px" placeholder="Si j'avais le pouvoir d'améliorer les transports dans ma ville, je..."></textarea>
       <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
         <button class="btn-check">AI批改</button>
         <button class="btn-outline">查看范文</button>
@@ -1351,27 +1817,49 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
 
     <!-- 口语 -->
     <div class="step-panel" id="lv3s5">
-      <div class="section-label">AI陪练 · 围绕课文话题展开对话</div>
+      <div class="section-label">AI陪练 · 选择话题开始对话</div>
       <div class="speaking-list">
-        <div class="speaking-item"><span>🌍 如果你能改变一项环保政策……</span><span class="speaking-arrow">›</span></div>
-        <div class="speaking-item"><span>🚆 讨论你城市的公共交通现状</span><span class="speaking-arrow">›</span></div>
-        <div class="speaking-item"><span>💭 用条件句表达三个愿望</span><span class="speaking-arrow">›</span></div>
+        <div class="speaking-item"><span>🚇 介绍你所在城市的地铁或公交系统</span><span class="speaking-arrow">›</span></div>
+        <div class="speaking-item"><span>🚲 描述你上下班或上学的通勤经历</span><span class="speaking-arrow">›</span></div>
+        <div class="speaking-item"><span>🚗 讨论开车和坐公共交通的利与弊</span><span class="speaking-arrow">›</span></div>
+        <div class="speaking-item"><span>🏘️ 讲述你居住的街区有哪些交通便利或不便的地方</span><span class="speaking-arrow">›</span></div>
+        <div class="speaking-item"><span>🌱 谈谈骑自行车对城市环境的好处</span><span class="speaking-arrow">›</span></div>
+      </div>
+      <div class="next-wrap"><button class="btn-check" onclick="goStep(3,6)">拓展 →</button></div>
+    </div>
+
+    <!-- 拓展 -->
+    <div class="step-panel" id="lv3s6">
+      <div class="section-label">拓展阅读 · 百科知识科普</div>
+      <div class="ext-card">
+        <div class="ext-quote">Le Grand Paris Express</div>
+        <div class="ext-src">🚇 法国时事 · 城市建设</div>
+        <div class="ext-note">大巴黎快线（Grand Paris Express）是法国历史上规模最大的基础设施项目之一，计划在巴黎地区新增约200公里的地铁线路和68个新车站，主要覆盖目前交通不便的郊区（banlieues）。该项目旨在缓解现有路线的拥堵、缩短通勤时间，并将更多郊区居民与市中心连接起来——正是课文中所提到的"équité d'accès à la mobilité"（出行公平性）的体现。</div>
+      </div>
+      <div class="ext-card">
+        <div class="ext-quote">双语拓展 · La ville du quart d'heure</div>
+        <div class="ext-src">🏙️ 城市规划概念</div>
+        <div class="ext-note">
+          <strong>法语原文：</strong>Le concept de « ville du quart d'heure » propose que chaque habitant puisse accéder à ses besoins essentiels — travail, commerces, écoles, parcs — en 15 minutes à pied ou à vélo depuis son domicile.<br><br>
+          <strong>中文译文：</strong>"十五分钟城市"这一概念主张，每位居民应能在步行或骑车15分钟内到达工作、购物、学校、公园等基本生活设施。巴黎市长安娜·伊达尔戈（Anne Hidalgo）是这一理念的积极倡导者，并将其作为城市规划的核心目标之一。
+        </div>
       </div>
       <div class="complete-box">
         <span class="complete-icon">✓</span>
-        <div class="complete-title">B1 · 单元2 课2 完成</div>
-        <div class="complete-sub">下一课：间接引语的时态转换</div>
+        <div class="complete-title">B1 · 单元1 课2 完成</div>
+        <div class="complete-sub">下一课：环境与气候变化</div>
       </div>
     </div>
   </div>
 </div>
 
+
 <!-- ─────────────── LEVEL 4: B2 ─────────────── -->
 <div class="panel" id="lv4">
   <div class="lesson-header">
-    <div class="lesson-level-tag"><span class="level-pip" style="background:var(--lv4)"></span>B2 · 单元1 — 课2</div>
-    <h1 class="lesson-title">虚拟式过去时</h1>
-    <p class="lesson-subtitle">Subjonctif passé · 表达对已发生事件的主观判断 · 真实新闻精读</p>
+    <div class="lesson-level-tag"><span class="level-pip" style="background:var(--lv4)"></span>B2 · 单元1 — 课3</div>
+    <h1 class="lesson-title">科技与就业</h1>
+    <p class="lesson-subtitle">Technologie et emploi · 精读论述文 · 虚拟式过去时 · 条件式过去时</p>
   </div>
   <div class="step-bar" id="tabs4">
     <div class="step-tab active" onclick="goStep(4,0)">精读</div>
@@ -1380,6 +1868,7 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
     <div class="step-tab" onclick="goStep(4,3)">练习</div>
     <div class="step-tab" onclick="goStep(4,4)">辩论</div>
     <div class="step-tab" onclick="goStep(4,5)">写作</div>
+    <div class="step-tab" onclick="goStep(4,6)">拓展</div>
   </div>
   <div class="content-area">
 
@@ -1394,10 +1883,11 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
         <button class="btn-outline">🎙 跟读</button>
       </div>
       <div class="reading-card">
-        <p>La <span class="hl" title="全球化">mondialisation</span> a profondément <span class="hl" title="重塑，改变">reconfiguré</span> les marchés du travail dans les pays <span class="hl" title="工业化的">industrialisés</span>. Bien que les économistes aient longtemps <span class="hl" title="维护，坚持认为">soutenu</span> que ses effets soient globalement positifs, un nombre croissant d'études <span class="hl" title="提出质疑">remet en question</span> ce <span class="hl" title="共识">consensus</span>.</p>
-        <p>Il est <span class="hl" title="令人担忧的">préoccupant</span> que les <span class="hl" title="不平等">inégalités</span> aient autant augmenté ces deux dernières décennies. Les <span class="hl" title="最富裕的">plus aisés</span> ont <span class="hl" title="从……中获益">bénéficié</span> de l'ouverture des marchés, tandis que les classes <span class="hl" title="中低">moyennes et populaires</span> ont souvent <span class="hl" title="承受">subi</span> la concurrence étrangère.</p>
-        <p>Pour que la mondialisation <span class="hl" title="依然">reste</span> un projet politique <span class="hl" title="可持续的">viable</span>, il aurait fallu que les États <span class="hl" title="确保">assurent</span> une meilleure <span class="hl" title="财富再分配">redistribution des richesses</span>. Certains <span class="hl" title="经济学家">économistes</span> <span class="hl" title="后悔，遗憾">regrettent</span> que les politiques de <span class="hl" title="补偿">compensation</span> n'aient pas été mises en place plus tôt.</p>
+        <p>L'<span class="hl" title="自动化">automatisation</span> et l'<span class="hl" title="人工智能">intelligence artificielle</span> transforment <span class="hl" title="深刻地，根本性地">profondément</span> les marchés du travail dans les pays industrialisés. Bien que les économistes aient longtemps <span class="hl" title="维护，坚持认为">soutenu</span> que la technologie crée autant d'emplois qu'elle en <span class="hl" title="破坏，摧毁">détruit</span>, un nombre croissant d'études <span class="hl" title="质疑">remet en question</span> ce <span class="hl" title="共识">consensus</span>.</p>
+        <p>Il est <span class="hl" title="令人担忧的">préoccupant</span> que certaines catégories de travailleurs <span class="hl" title="遭受">aient subi</span> des <span class="hl" title="裁员，失业">suppressions de postes</span> massives sans avoir reçu de formation <span class="hl" title="适当的，合适的">adéquate</span>. Les experts <span class="hl" title="后悔，遗憾">regrettent</span> que les politiques de <span class="hl" title="转岗培训，职业再培训">reconversion professionnelle</span> n'<span class="hl" title="实施，落实">aient pas été mises en œuvre</span> plus tôt.</p>
+        <p>Pour que l'<span class="hl" title="人工智能">IA</span> reste un moteur de <span class="hl" title="进步，发展">progrès</span> <span class="hl" title="共同的，集体的">collectif</span>, il aurait fallu que les États <span class="hl" title="预见，预判">anticipent</span> ces <span class="hl" title="变革，颠覆">bouleversements</span> et <span class="hl" title="投入">investissent</span> davantage dans l'éducation. Certains économistes <span class="hl" title="捍卫，倡导">défendent</span> l'idée d'un <span class="hl" title="全民基本收入">revenu universel de base</span> pour <span class="hl" title="应对，缓解">amortir</span> les <span class="hl" title="冲击，影响">chocs</span> économiques liés à l'<span class="hl" title="自动化">automatisation</span>.</p>
       </div>
+      <div style="font-size:12.5px;color:var(--muted);margin-top:-12px;margin-bottom:20px">💡 点击黄色高亮词可查看词义注释</div>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(4,1)">词汇 →</button></div>
     </div>
 
@@ -1407,16 +1897,36 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
       <table class="vocab-table">
         <thead><tr><th>法语</th><th style="width:80px">词性</th><th>释义</th><th></th></tr></thead>
         <tbody>
-          <tr><td class="v-fr">reconfigurer</td><td class="v-pos">v.</td><td><div class="v-zh">重新配置，深刻改变（书面）</div><div class="v-ex">La crise a reconfiguré les alliances politiques. — 危机重塑了政治联盟。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">remettre en question</td><td class="v-pos">loc. v.</td><td><div class="v-zh">对……提出质疑，重新审视</div><div class="v-ex">Ce rapport remet en question les hypothèses initiales. — 该报告对初始假设提出质疑。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">un consensus</td><td class="v-pos">n.m.</td><td><div class="v-zh">共识（无复数意义时不加s）</div><div class="v-ex">Il existe un consensus scientifique sur ce sujet. — 这一议题存在科学共识。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">préoccupant</td><td class="v-pos">adj.</td><td><div class="v-zh">令人担忧的，令人不安的</div><div class="v-ex">La situation est préoccupante. — 形势令人担忧。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">les inégalités</td><td class="v-pos">n.f.pl.</td><td><div class="v-zh">不平等（通常用复数）</div><div class="v-ex">Les inégalités de revenus se creusent. — 收入不平等在加剧。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">aisé(e)</td><td class="v-pos">adj.</td><td><div class="v-zh">富裕的；轻松的（两义）</div><div class="v-ex">Les ménages aisés ont mieux résisté à la crise. — 富裕家庭更好地抵御了危机。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">subir</td><td class="v-pos">v.</td><td><div class="v-zh">承受，遭受，经历（被动含义）</div><div class="v-ex">Elle a subi de nombreuses pressions. — 她承受了很多压力。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">viable</td><td class="v-pos">adj.</td><td><div class="v-zh">可行的，可持续的</div><div class="v-ex">Ce modèle économique n'est pas viable. — 这个经济模式不可持续。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">la redistribution</td><td class="v-pos">n.f.</td><td><div class="v-zh">再分配（财富、资源等）</div><div class="v-ex">La redistribution des richesses est un enjeu politique majeur. — 财富再分配是一个重大政治议题。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
-          <tr><td class="v-fr">regretter que + subj.</td><td class="v-pos">loc.</td><td><div class="v-zh">遗憾/后悔……（后接虚拟式）</div><div class="v-ex">Je regrette que tu ne sois pas venu. — 我遗憾你没有来。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">l'automatisation</td><td class="v-pos">n.f.</td><td><div class="v-zh">自动化</div><div class="v-ex">L'automatisation menace certains emplois répétitifs. — 自动化威胁着一些重复性工作。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">l'intelligence artificielle</td><td class="v-pos">loc.</td><td><div class="v-zh">人工智能（缩写：IA/AI）</div><div class="v-ex">L'IA transforme de nombreux secteurs. — 人工智能正在改变众多行业。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">profondément</td><td class="v-pos">adv.</td><td><div class="v-zh">深刻地，根本性地</div><div class="v-ex">Ce changement nous affecte profondément. — 这一变化对我们影响深远。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">soutenir</td><td class="v-pos">v.</td><td><div class="v-zh">支持；主张，坚持认为</div><div class="v-ex">Il soutient que cette décision est juste. — 他坚持认为这个决定是对的。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">remettre en question</td><td class="v-pos">loc.v.</td><td><div class="v-zh">质疑，重新审视</div><div class="v-ex">Ces données remettent en question nos hypothèses. — 这些数据质疑了我们的假设。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">un consensus</td><td class="v-pos">n.m.</td><td><div class="v-zh">共识</div><div class="v-ex">Il existe un consensus scientifique sur ce point. — 在这一问题上存在科学共识。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">préoccupant(e)</td><td class="v-pos">adj.</td><td><div class="v-zh">令人担忧的，令人不安的</div><div class="v-ex">La situation économique est préoccupante. — 经济形势令人担忧。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">subir</td><td class="v-pos">v.</td><td><div class="v-zh">遭受，承受（被动含义）</div><div class="v-ex">Elle a subi de nombreuses pressions. — 她承受了很多压力。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">une suppression de poste</td><td class="v-pos">loc.</td><td><div class="v-zh">裁员，职位削减</div><div class="v-ex">L'entreprise a annoncé 500 suppressions de postes. — 该公司宣布裁减500个职位。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">adéquat(e)</td><td class="v-pos">adj.</td><td><div class="v-zh">适当的，合适的，充分的</div><div class="v-ex">Les ressources ne sont pas adéquates. — 资源不够充分。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">regretter que + subj.</td><td class="v-pos">loc.</td><td><div class="v-zh">遗憾……，后悔……（后接虚拟式）</div><div class="v-ex">Je regrette que tu n'aies pas pu venir. — 我遗憾你没能来。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">la reconversion professionnelle</td><td class="v-pos">loc.</td><td><div class="v-zh">职业转岗培训，职业再培训</div><div class="v-ex">La reconversion est essentielle pour les travailleurs déplacés. — 职业再培训对失业工人至关重要。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">mettre en œuvre</td><td class="v-pos">loc.v.</td><td><div class="v-zh">实施，落实，执行</div><div class="v-ex">Il faut mettre en œuvre cette réforme rapidement. — 需要迅速落实这项改革。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">un moteur de progrès</td><td class="v-pos">loc.</td><td><div class="v-zh">进步的动力/引擎</div><div class="v-ex">L'innovation est un moteur de progrès économique. — 创新是经济进步的引擎。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">collectif / -ive</td><td class="v-pos">adj.</td><td><div class="v-zh">集体的，共同的</div><div class="v-ex">Un effort collectif est nécessaire. — 需要共同努力。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">anticiper</td><td class="v-pos">v.</td><td><div class="v-zh">预见，预判，提前应对</div><div class="v-ex">Il faut anticiper les changements. — 需要提前预判变化。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">un bouleversement</td><td class="v-pos">n.m.</td><td><div class="v-zh">颠覆，剧变，巨大变革</div><div class="v-ex">Ce siècle a connu de nombreux bouleversements. — 这个世纪经历了许多剧变。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">défendre</td><td class="v-pos">v.</td><td><div class="v-zh">捍卫；倡导（某个观点）；辩护</div><div class="v-ex">Elle défend une position minoritaire. — 她捍卫一种少数派立场。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">le revenu universel de base</td><td class="v-pos">loc.</td><td><div class="v-zh">全民基本收入</div><div class="v-ex">Le débat sur le revenu universel est relancé. — 关于全民基本收入的讨论重新兴起。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">amortir</td><td class="v-pos">v.</td><td><div class="v-zh">缓冲，减轻（冲击）；摊销（财务）</div><div class="v-ex">Les aides sociales amortissent les chocs économiques. — 社会援助缓冲了经济冲击。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">un choc</td><td class="v-pos">n.m.</td><td><div class="v-zh">冲击，震荡</div><div class="v-ex">Le choc pétrolier de 1973 a marqué l'économie mondiale. — 1973年石油危机震撼了全球经济。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">lié(e) à</td><td class="v-pos">adj.</td><td><div class="v-zh">与……相关的，由……引起的</div><div class="v-ex">Les problèmes liés au changement climatique s'aggravent. — 与气候变化相关的问题日益严重。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">bien que + subj.</td><td class="v-pos">loc.conj.</td><td><div class="v-zh">尽管，虽然（让步连词，接虚拟式）</div><div class="v-ex">Bien qu'il soit fatigué, il continue. — 尽管他很疲惫，他仍在继续。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">croissant(e)</td><td class="v-pos">adj.</td><td><div class="v-zh">增长的，不断增加的</div><div class="v-ex">Un nombre croissant d'entreprises adoptent l'IA. — 越来越多的企业采用人工智能。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">industrialisé(e)</td><td class="v-pos">adj.</td><td><div class="v-zh">工业化的</div><div class="v-ex">Les pays industrialisés font face à ce défi. — 工业化国家面临这一挑战。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">une formation</td><td class="v-pos">n.f.</td><td><div class="v-zh">培训；教育；养成</div><div class="v-ex">Il suit une formation en informatique. — 他在接受计算机培训。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">détruire</td><td class="v-pos">v.</td><td><div class="v-zh">摧毁，消灭，破坏</div><div class="v-ex">L'incendie a détruit tout l'immeuble. — 大火摧毁了整栋楼。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">massif / -ive</td><td class="v-pos">adj.</td><td><div class="v-zh">大规模的，大量的</div><div class="v-ex">Des investissements massifs sont nécessaires. — 需要大规模投资。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">davantage</td><td class="v-pos">adv.</td><td><div class="v-zh">更多（程度副词，书面语）</div><div class="v-ex">Il faudrait investir davantage dans l'éducation. — 需要在教育上投入更多。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
+          <tr><td class="v-fr">s'accorder sur</td><td class="v-pos">v.réfl.</td><td><div class="v-zh">在……上达成一致</div><div class="v-ex">Les experts s'accordent sur l'urgence d'agir. — 专家们一致认为行动紧迫。</div></td><td><button class="v-audio-btn">🔊 听</button></td></tr>
         </tbody>
       </table>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(4,2)">语法 →</button></div>
@@ -1430,46 +1940,36 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
         <div class="grammar-rule-box">
           <div class="grammar-rule-formula">avoir/être（虚拟式现在时）+ 过去分词</div>
           <div class="grammar-rule-desc">
-            虚拟式过去时用于表达：在触发虚拟式的主句之前<strong>已经发生</strong>的动作，或说话者对<strong>过去事件</strong>的主观判断、情感、怀疑。<br><br>
-            构成：将助动词 avoir 或 être 变为虚拟式现在时，后接主动词的过去分词。<br>
-            avoir 虚拟式：que j'<strong>aie</strong>, que tu <strong>aies</strong>, qu'il <strong>ait</strong>, que nous <strong>ayons</strong>, que vous <strong>ayez</strong>, qu'ils <strong>aient</strong><br>
-            être 虚拟式：que je <strong>sois</strong>, que tu <strong>sois</strong>, qu'il <strong>soit</strong>, que nous <strong>soyons</strong>, que vous <strong>soyez</strong>, qu'ils <strong>soient</strong>
+            虚拟式过去时用于：在触发虚拟式的主句之前<strong>已经发生</strong>的动作，或对<strong>过去事件</strong>的主观判断、情感与遗憾。<br><br>
+            avoir 的虚拟式：que j'<strong>aie</strong>, que tu <strong>aies</strong>, qu'il <strong>ait</strong>, que nous <strong>ayons</strong>, que vous <strong>ayez</strong>, qu'ils <strong>aient</strong><br>
+            être 的虚拟式：que je <strong>sois</strong>, que tu <strong>sois</strong>, qu'il <strong>soit</strong>, que nous <strong>soyons</strong>, que vous <strong>soyez</strong>, qu'ils <strong>soient</strong>
           </div>
         </div>
-
-        <div class="grammar-section-title">例句（来自课文与扩展）</div>
+        <div class="grammar-section-title">来自课文的例句</div>
         <div class="example-list">
           <div class="example-item">
-            <div class="ex-fr">Bien que les économistes <em>aient longtemps soutenu</em> que ses effets soient positifs…</div>
-            <div class="ex-zh">尽管经济学家们长期以来一直认为其影响是积极的……（bien que 触发虚拟式，过去动作）</div>
+            <div class="ex-fr">Bien que les économistes <em>aient</em> longtemps <em>soutenu</em> que la technologie crée des emplois…</div>
+            <div class="ex-zh">尽管经济学家长期主张技术创造就业……（bien que + 虚拟式过去时，表让步）</div>
           </div>
           <div class="example-item">
-            <div class="ex-fr">Il est préoccupant que les inégalités <em>aient autant augmenté</em> ces dernières décennies.</div>
-            <div class="ex-zh">不平等在过去几十年如此大幅度地增加，令人担忧。（情感评价 + 过去事件）</div>
+            <div class="ex-fr">Il est préoccupant que certains travailleurs <em>aient subi</em> des suppressions de postes massives.</div>
+            <div class="ex-zh">某些工人遭受大规模裁员，这令人担忧。（情感评价 + 过去事件）</div>
           </div>
           <div class="example-item">
-            <div class="ex-fr">Il aurait fallu que les États <em>assurent</em> une meilleure redistribution. （此处用虚拟式现在时，因为 falloir 条件式过去时触发）</div>
-            <div class="ex-zh">国家本应确保更好的财富再分配。（虚拟式被条件式过去时的主句触发）</div>
-          </div>
-          <div class="example-item">
-            <div class="ex-fr">Je regrette que tu n'<em>aies pas pu</em> venir à la réunion.</div>
-            <div class="ex-zh">我很遗憾你没能来参加会议。（regretter que 触发，表达对过去事件的遗憾）</div>
+            <div class="ex-fr">Les experts regrettent que les politiques n'<em>aient pas été mises en œuvre</em> plus tôt.</div>
+            <div class="ex-zh">专家们遗憾相关政策没有更早落实。（regretter que + 虚拟式过去时）</div>
           </div>
         </div>
-
-        <div class="grammar-section-title">与虚拟式现在时的区别</div>
+        <div class="grammar-section-title">虚拟式现在时 vs 过去时</div>
         <table class="contrast-table">
-          <thead><tr><th>时态</th><th>表达的时间关系</th><th>例</th></tr></thead>
+          <thead><tr><th>时态</th><th>表达的时间</th><th>例句</th></tr></thead>
           <tbody>
-            <tr><td><strong>虚拟式现在时</strong></td><td>与主句同时，或在主句之后</td><td>Je suis content qu'il <strong>vienne</strong>. — 我很高兴他（要）来。</td></tr>
-            <tr><td><strong>虚拟式过去时</strong></td><td>在主句动作之前已发生</td><td>Je suis content qu'il <strong>soit venu</strong>. — 我很高兴他（已经）来了。</td></tr>
+            <tr><td><strong>虚拟式现在时</strong></td><td>与主句同时或之后</td><td>Je regrette qu'il <strong>ne vienne</strong> pas. — 我遗憾他不来。</td></tr>
+            <tr><td><strong>虚拟式过去时</strong></td><td>在主句之前已发生</td><td>Je regrette qu'il <strong>ne soit pas venu</strong>. — 我遗憾他没来。</td></tr>
           </tbody>
         </table>
-
-        <div class="grammar-section-title">注意事项</div>
-        <div class="warning-box"><span class="warning-icon">⚠</span><span><strong>être 类动词的过去分词配合：</strong>用 être 构成虚拟式过去时时，过去分词同样需要与主语的性数配合。<br>Il est dommage qu'elle <strong>soit partie</strong> si tôt. — 真遗憾她这么早就走了。</span></div>
-        <div class="tip-box"><span class="tip-icon">💡</span><span><strong>书面语中的虚拟式过去时</strong>：在新闻、学术写作中，虚拟式过去时出现频率很高，尤其是在让步从句（bien que, quoique）和情感/判断主句（il est regrettable que, il est surprenant que）后。掌握它是读懂法语新闻的关键。</span></div>
-        <div class="warning-box"><span class="warning-icon">⚠</span><span><strong>口语中的使用：</strong>在日常口语中，法国人有时会用虚拟式现在时代替过去时，即使逻辑上应该用过去时。这种简化在书面语和正式场合中是不规范的，B2阶段写作应使用规范形式。</span></div>
+        <div class="warning-box"><span class="warning-icon">⚠</span><span><strong>être 类动词过去分词配合：</strong>用 être 构成虚拟式过去时时，过去分词需与主语性数配合。<br>Il est dommage qu'elle <strong>soit partie</strong> si tôt. — 真遗憾她这么早就走了。</span></div>
+        <div class="tip-box"><span class="tip-icon">💡</span><span>虚拟式过去时在新闻和学术写作中频繁出现，尤其是在让步从句（bien que, quoique）和情感/判断主句（il est regrettable que, il est surprenant que）之后。</span></div>
       </div>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(4,3)">练习 →</button></div>
     </div>
@@ -1478,23 +1978,51 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
     <div class="step-panel" id="lv4s3">
       <div class="ex-section">
         <div class="ex-type-badge">批判性阅读</div>
-        <div class="ex-question">根据课文，下列哪种说法最准确地反映了作者的立场？</div>
+        <div class="ex-question">根据课文，作者认为人工智能带来的就业问题出现的根本原因是什么？</div>
         <div class="mcq-list" id="b2m1">
-          <button class="mcq-opt" onclick="chk('b2m1',this,false)"><span class="opt-letter">A</span>全球化总体上对所有社会阶层有益</button>
-          <button class="mcq-opt" onclick="chk('b2m1',this,false)"><span class="opt-letter">B</span>应该完全停止全球化进程</button>
-          <button class="mcq-opt" onclick="chk('b2m1',this,true)"><span class="opt-letter">C</span>全球化可以是可行的，但需要配套的财富再分配政策</button>
-          <button class="mcq-opt" onclick="chk('b2m1',this,false)"><span class="opt-letter">D</span>经济学家对全球化的看法始终一致</button>
+          <button class="mcq-opt" onclick="chk('b2m1',this,false)"><span class="opt-letter">A</span>技术进步过于迅猛，无法控制</button>
+          <button class="mcq-opt" onclick="chk('b2m1',this,true)"><span class="opt-letter">B</span>政府未提前预判并投资于职业再培训和教育</button>
+          <button class="mcq-opt" onclick="chk('b2m1',this,false)"><span class="opt-letter">C</span>企业优先考虑利润而忽视工人</button>
+          <button class="mcq-opt" onclick="chk('b2m1',this,false)"><span class="opt-letter">D</span>经济学家的预测失误</button>
         </div>
       </div>
       <hr class="divider">
       <div class="ex-section">
-        <div class="ex-type-badge">语法改写</div>
+        <div class="ex-type-badge">批判性阅读</div>
+        <div class="ex-question">课文中提到的"全民基本收入"（revenu universel de base）的目的是什么？</div>
+        <div class="mcq-list" id="b2m2">
+          <button class="mcq-opt" onclick="chk('b2m2',this,false)"><span class="opt-letter">A</span>取代所有社会保障制度</button>
+          <button class="mcq-opt" onclick="chk('b2m2',this,false)"><span class="opt-letter">B</span>促进消费、刺激经济增长</button>
+          <button class="mcq-opt" onclick="chk('b2m2',this,true)"><span class="opt-letter">C</span>缓解自动化带来的就业冲击</button>
+          <button class="mcq-opt" onclick="chk('b2m2',this,false)"><span class="opt-letter">D</span>奖励积极推动自动化的企业</button>
+        </div>
+      </div>
+      <hr class="divider">
+      <div class="ex-section">
+        <div class="ex-type-badge">语法改写 · 虚拟式过去时</div>
         <div class="ex-question">将括号中的动词变为正确的虚拟式过去时：</div>
         <div class="fill-wrap" style="margin-bottom:10px">
-          <div class="fill-sentence" style="font-size:14px">Il est regrettable que le gouvernement n'<input class="fill-input" id="f4" placeholder="prendre → ?" style="width:220px"> pas ces mesures plus tôt.</div>
+          <div class="fill-sentence" style="font-size:14px">Il est regrettable que le gouvernement n'<input class="fill-input" id="f4a" placeholder="anticiper → ?" style="width:220px"> ces changements à temps.</div>
         </div>
-        <button class="btn-check" onclick="chkFill('f4','ait pris','fb4')">检查答案</button>
-        <div class="fb" id="fb4"></div>
+        <button class="btn-check" onclick="chkFill('f4a','ait anticipé','fb4a')">检查答案</button>
+        <div class="fb" id="fb4a"></div>
+      </div>
+      <hr class="divider">
+      <div class="ex-section">
+        <div class="ex-type-badge">语法改写 · 虚拟式过去时</div>
+        <div class="ex-question">将括号中的动词变为正确的虚拟式过去时：</div>
+        <div class="fill-wrap" style="margin-bottom:10px">
+          <div class="fill-sentence" style="font-size:14px">Bien que de nombreuses études <input class="fill-input" id="f4b" placeholder="remettre en question → ?" style="width:260px"> ce consensus, les politiques n'ont pas changé.</div>
+        </div>
+        <button class="btn-check" onclick="chkFill('f4b','aient remis en question','fb4b')">检查答案</button>
+        <div class="fb" id="fb4b"></div>
+      </div>
+      <hr class="divider">
+      <div class="ex-section">
+        <div class="ex-type-badge">段落摘要</div>
+        <div class="ex-question">用法语写一句话，概括课文第二段的主要内容（包含虚拟式过去时）：</div>
+        <textarea class="write-area" style="min-height:70px" placeholder="Dans le deuxième paragraphe, l'auteur explique que..."></textarea>
+        <div style="margin-top:8px;font-size:12.5px;color:var(--muted)">参考方向：提及工人遭受裁员（subir des suppressions de postes）且未获充分培训，以及专家遗憾再培训政策未能更早落实（regretter que les politiques n'aient pas été mises en œuvre plus tôt）。</div>
       </div>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(4,4)">辩论 →</button></div>
     </div>
@@ -1502,41 +2030,42 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
     <!-- 辩论 -->
     <div class="step-panel" id="lv4s4">
       <div class="section-label">论证分析 · 辩论练习</div>
-      <p class="body-text" style="margin-bottom:16px">课文呈现了对全球化影响的不同观点，梳理如下：</p>
+      <p class="body-text" style="margin-bottom:16px">课文呈现了关于人工智能与就业的不同观点，梳理如下：</p>
       <div class="arg-grid">
         <div class="arg-card pour">
-          <div class="arg-label">支持全球化</div>
+          <div class="arg-label">科技带来机遇</div>
           <ul class="arg-points">
-            <li>经济学家长期认为其效益整体积极</li>
-            <li>开放市场让最富裕群体获益</li>
-            <li>历史数据显示贸易促进经济增长</li>
+            <li>经济学家长期认为技术创造和摧毁的就业数量相当</li>
+            <li>历史上每次技术革命都孕育了新职业</li>
+            <li>自动化可以解放人类从事更有创造性的工作</li>
+            <li>人工智能提升生产效率，创造更多社会财富</li>
           </ul>
         </div>
         <div class="arg-card contre">
-          <div class="arg-label">质疑全球化</div>
+          <div class="arg-label">科技加剧就业危机</div>
           <ul class="arg-points">
-            <li>越来越多研究对原有共识提出质疑</li>
-            <li>中低收入阶层遭受外国竞争冲击</li>
-            <li>过去二十年不平等显著加剧</li>
-            <li>补偿性政策未能及时落实</li>
+            <li>越来越多研究质疑"技术中性"的传统共识</li>
+            <li>部分工人遭遇大规模裁员，未获再培训支持</li>
+            <li>再培训政策落实滞后，政府未提前规划</li>
+            <li>低技能岗位受冲击最大，加剧社会不平等</li>
           </ul>
         </div>
       </div>
-      <p class="body-text" style="margin-bottom:14px">辩论常用法语表达：</p>
+      <p class="body-text" style="margin-bottom:14px">辩论与论证常用表达：</p>
       <div class="phrase-grid">
         <div class="phrase-card">
-          <div class="phrase-card-title">论证支持</div>
-          <ul><li>Il est indéniable que…</li><li>Force est de constater que…</li><li>À l'appui de cette thèse…</li></ul>
+          <div class="phrase-card-title">让步与反驳</div>
+          <ul><li>Bien que… il n'en reste pas moins que…</li><li>Certes… mais en réalité…</li><li>Si l'on admet que… force est de constater que…</li></ul>
         </div>
         <div class="phrase-card">
-          <div class="phrase-card-title">表达质疑/反驳</div>
-          <ul><li>Certes… mais…</li><li>On peut s'interroger sur…</li><li>Il convient de nuancer…</li></ul>
+          <div class="phrase-card-title">引用与论证</div>
+          <ul><li>Les experts s'accordent sur…</li><li>Un nombre croissant d'études montre que…</li><li>Il convient de nuancer cette affirmation…</li></ul>
         </div>
       </div>
       <div class="speaking-list" style="margin-top:16px">
-        <div class="speaking-item"><span>🎙 支持方：全球化利大于弊</span><span class="speaking-arrow">›</span></div>
-        <div class="speaking-item"><span>🎙 反对方：全球化加剧不平等</span><span class="speaking-arrow">›</span></div>
-        <div class="speaking-item"><span>🎙 中立分析：两面论证</span><span class="speaking-arrow">›</span></div>
+        <div class="speaking-item"><span>🎙 支持方：人工智能总体上利大于弊</span><span class="speaking-arrow">›</span></div>
+        <div class="speaking-item"><span>🎙 反对方：人工智能加剧就业不平等</span><span class="speaking-arrow">›</span></div>
+        <div class="speaking-item"><span>🎙 中立分析：需要配套政策才能实现双赢</span><span class="speaking-arrow">›</span></div>
       </div>
       <div class="next-wrap"><button class="btn-check" onclick="goStep(4,5)">写作 →</button></div>
     </div>
@@ -1545,37 +2074,58 @@ hr.divider { border: none; border-top: 1px solid var(--border2); margin: 28px 0;
     <div class="step-panel" id="lv4s5">
       <div class="section-label">论述写作 · 200-250词</div>
       <div class="write-prompt">
-        <strong>题目：</strong>« La mondialisation est-elle une chance ou une menace pour les sociétés modernes ? »<br>（全球化对现代社会来说是机遇还是威胁？）<br><br>
-        要求：提出立场 → 论据支撑 → 反驳一个反方论据 → 结论。<br>
+        <strong>题目：</strong>« L'intelligence artificielle représente-t-elle une menace ou une opportunité pour le marché du travail ? »<br>（人工智能对劳动力市场来说是威胁还是机遇？）<br><br>
+        要求：立场明确 → 两点支撑论据 → 反驳一个对立论点 → 结论。<br>
         尝试使用：<em>bien que + subjonctif passé / il est regrettable que / à l'instar de / certes… mais…</em>
       </div>
-      <textarea class="write-area" style="min-height:160px" placeholder="Introduction : La mondialisation, phénomène majeur du XXe siècle, suscite des débats…"></textarea>
+      <textarea class="write-area" style="min-height:160px" placeholder="L'avènement de l'intelligence artificielle soulève des questions fondamentales sur l'avenir du travail..."></textarea>
       <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
         <button class="btn-check">AI批改（语法 · 词汇 · 逻辑）</button>
         <button class="btn-outline">词汇检查</button>
         <button class="btn-outline">查看范文</button>
       </div>
+      <div class="next-wrap"><button class="btn-check" onclick="goStep(4,6)">拓展 →</button></div>
+    </div>
+
+    <!-- 拓展 -->
+    <div class="step-panel" id="lv4s6">
+      <div class="section-label">拓展阅读 · 百科知识科普</div>
+      <div class="ext-card">
+        <div class="ext-quote">L'impact de l'IA sur l'emploi : les chiffres clés</div>
+        <div class="ext-src">📊 经济与科技</div>
+        <div class="ext-note">经济合作与发展组织（OCDE）的研究表明，在OECD成员国中，约14%的工作岗位面临自动化的高度风险，另有32%的工作将发生重大变化。受冲击最大的往往是可重复性较高的低技能岗位，而创造力强、需要情感交流的职业（如教师、治疗师、艺术家）相对更不易被替代。</div>
+      </div>
+      <div class="ext-card">
+        <div class="ext-quote">双语拓展 · Le débat sur le revenu universel</div>
+        <div class="ext-src">💡 社会政策议题</div>
+        <div class="ext-note">
+          <strong>法语原文：</strong>Le revenu universel de base (RUB) est une somme versée à tous les citoyens, sans condition de revenus ni d'emploi. Ses partisans soutiennent qu'il permettrait d'amortir les chocs liés à l'automatisation et de libérer les individus pour des activités créatives ou bénévoles.<br><br>
+          <strong>中文译文：</strong>全民基本收入（RUB）是向所有公民发放的一笔款项，不设收入或就业条件。支持者认为，它能够缓冲自动化带来的就业冲击，并让人们从事更有创造性或志愿性质的活动。目前芬兰、肯尼亚等地已开展了相关试验项目。
+        </div>
+      </div>
       <div class="complete-box">
         <span class="complete-icon">✓</span>
-        <div class="complete-title">B2 · 单元1 课2 完成</div>
+        <div class="complete-title">B2 · 单元1 课3 完成</div>
         <div class="complete-sub">下一课：让步与转折连接词（进阶）</div>
       </div>
     </div>
   </div>
 </div>
 
+
+
 </main>
 
 <script>
 // ── STATE ──
 let curLv = 0;
-const stepCounts = [3, 6, 6, 6, 6];
+const stepCounts = [3, 6, 6, 7, 7];
 const stepNames = [
   ['音素讲解','发音规则','跟读练习'],
   ['对话','词汇','语法','练习','口语','拓展'],
   ['对话','词汇','语法','练习','口语','拓展'],
-  ['课文','词汇','语法','练习','写作','口语'],
-  ['精读','词汇','语法','练习','辩论','写作'],
+  ['课文','词汇','语法','练习','写作','口语','拓展'],
+  ['精读','词汇','语法','练习','辩论','写作','拓展'],
 ];
 const curSteps = [0,0,0,0,0];
 
